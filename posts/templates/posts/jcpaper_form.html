@@ -1,0 +1,60 @@
+
+
+{% extends 'posts/base.html' %}
+
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+
+    <div class="content-section">
+        <form action='' method="POST" enctype='multipart/form-data'>
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Create JC Posts</legend>
+                <div class="row">
+                    <div class="col-6">
+                        {{ form.title|as_crispy_field }}
+                    </div>
+                    <div class="col-6">
+
+                        {{ form.journal|as_crispy_field }}
+                    </div>
+
+
+                    <div class="col-6">
+
+                        {{ form.file|as_crispy_field }}
+                    </div>
+                    <div class="col-6">
+
+                        {{ form.hwl_recommend|as_crispy_field }}
+                    </div>
+
+                    <div class="col-4">
+                        {{ form.presenter|as_crispy_field }}
+                    </div>
+
+                    <div class="col-3">
+                        {{ form.location|as_crispy_field }}
+                    </div>
+                    <div class="col-4">
+                        {{ form.time|as_crispy_field }}
+                    </div>
+                    {{ form.link|as_crispy_field }}
+                </div>
+                {{ form.content|as_crispy_field }}
+
+                {{ form.media }}
+            </fieldset>
+            <p></p>
+            <div>
+                <button class="btn btn-outline-info" type="submit">Post</button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

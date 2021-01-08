@@ -1,0 +1,42 @@
+{% extends 'posts/base.html' %}
+
+
+{% block content %}
+
+seq: {{ seq }}
+
+seq2: <p>{{ seq2 }}</p>
+
+seq3 (5' to 3'): <p>{{ seq3 }}</p>
+
+rev_3 (3' to 5'): <p>{{ rev_3 }}</p>
+
+match_3 : <p>{{ match_3 }}</p>
+
+
+
+<p>Length: {{ L }}</p>
+
+
+
+
+ <h1>Primer Result</h1>
+        <table class="table table-light table-hover">
+            <tr>
+                <th scope="col">Primer Name</th>
+                <th scope="col">Position</th>
+                <th scope="col">Sequence (5' to 3')</th>
+
+            </tr>
+
+            {% for primer in primers %}
+            <tr>
+            <th scope="row"><a href="{% url 'primerinfo' primer.pk %}">{{primer.name}}</th>
+                <td>{{primer.pos}}</td>
+                <td>{{primer.sequence}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+
+{% endblock %}

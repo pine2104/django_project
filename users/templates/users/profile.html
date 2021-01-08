@@ -1,0 +1,49 @@
+{% extends 'posts/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="content-section" style="margin:50px 0px 100px 0px;">
+<!--    <div class="media">-->
+<!--        <div class="row justify-content-start">-->
+<!--            <div class="col-12">-->
+<!--                <img class="rounded-circle article-img" src="{{ user.profile.image.url }}">-->
+<!--            </div>-->
+<!--            <div class="col-6">-->
+<!--                <a href="{% url 'myposts' %}">See My Posts</a>-->
+<!--            </div>-->
+<!--        </div>-->
+
+
+        <div class="media-body">
+            <div class="col-4">
+            </div>
+            <img class="rounded-circle article-img" src="{{ user.profile.image.url }}">
+
+            <h2 class="account-heading">{{ user.username }}</h2>
+            <a href="{% url 'myposts' %}">See My Posts</a>
+            <p class="text-secondary">{{ user.email }}</p>
+        </div>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                {% csrf_token %}
+<!--                <fieldset class="form-group">-->
+                    <legend class="border-bottom mb-4">Profile Info</legend>
+                    {{ u_form|crispy }}
+                    {{ p_form|crispy }}
+
+<!--                </fieldset>-->
+                <p></p>
+                <div class="form-group">
+                    <button class="btn btn-outline-info" type="submit">Update</button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+
+
+{% endblock content %}
+

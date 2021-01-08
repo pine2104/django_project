@@ -1,0 +1,53 @@
+
+{% extends 'homepage/base.html' %}
+
+{% block content %}
+<div style="margin:0px 0px 30px 0px;" class="content-section">
+
+    <form method='POST'>
+
+        {% csrf_token %}
+        Title：{{ postFilter.form.title }}
+        Content : {{ postFilter.form.content }}
+        Category：{{ postFilter.form.category }}
+        Author : {{ postFilter.form.author }}
+        Date : {{ postFilter.form.date_posted }}
+
+
+    <input style="margin: 30px 0px 20px 0px" type="submit" class="btn btn-primary" value="Search" />
+    </form>
+
+    <div class="row">
+        <h1 class="mb-0">Search Result</h1>
+        {% for post in postFilter.qs %}
+
+        <div class="col-lg-4">
+            <div class="card mt-4" style="width: 15rem;">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-3">
+                            <img class="rounded-circle article-img" src="{{ user.profile.image.url }}">
+                        </div>
+                        <div class="col-8">
+                            <h6><strong class="d-inline-block mb-12 text-primary">{{ post.category }}</strong></h6>
+                        </div>
+                        <div class="col-12">
+                            <h4 class="mb-0" align=justify>{{ post.title }}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                  <p class="article-content">{{ post.content|slice:"0:5" }}...</p>
+                  <a href="{% url 'postdetail' post.pk %}" class="stretched-link">more</a>
+                </div>
+                <div class="card-footer">
+                    <div class="mb-1 text-muted">{{ post.date_posted|date:"Y, M, d" }} by {{ post.author }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+
+{% endblock  %}

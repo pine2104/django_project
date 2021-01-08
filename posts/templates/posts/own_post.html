@@ -1,0 +1,39 @@
+{% extends 'posts/base.html' %}
+{% block content %}
+
+<div class="content-section" style="margin:30px 0px 100px 0px;">
+    <div class="media">
+        <div class="row">
+            <div class="col">
+                <img class="rounded-circle article-img" src="{{ user.profile.image.url }}">
+                <strong><font size="4">{{ user.username }}</strong></font>
+            </div>
+            <h4>{{ user.email }}</h4>
+        </div>
+    </div>
+</div>
+
+   <div class="row">
+        <h1 class="mb-0">All My Posts</h1>
+        {% for post in user_posts %}
+
+          <div class="col-lg-4">
+            <div class="card mt-4" style="width: 15rem;">
+              <div class="card-body">
+                  <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+                  <strong class="d-inline-block mb-2 text-primary">{{ post.category }}</strong>
+                  <h3 class="mb-0">{{ post.title }}</h3>
+                  <div class="mb-1 text-muted">{{ post.date_posted }} by {{ post.author }}</div>
+                  <p class="card-text mb-auto">{{ post.content|slice:"0:25" }}</p>
+                  <a href="{% url 'postdetail' post.pk %}" class="stretched-link">more</a>
+              </div>
+            </div>
+          </div>
+
+
+        {% endfor %}
+   </div>
+
+
+{% endblock content %}
+

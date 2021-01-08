@@ -1,0 +1,38 @@
+
+{% extends 'homepage/base.html' %}
+
+{% block content %}
+
+
+<div class="row">
+    <h1 class="mb-0">Recently Post</h1>
+
+    {% for post in posts %}
+    <div class="col-lg-4">
+        <div class="card mt-4" style="width: 15rem;">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-3">
+                        <img class="rounded-circle article-img" src="{{ user.profile.image.url }}">
+                    </div>
+                    <div class="col-8">
+                        <h6><strong class="d-inline-block mb-12 text-primary">{{ post.category }}</strong></h6>
+                    </div>
+                    <div class="col-12">
+                        <h4 class="mb-0" align=justify>{{ post.title }}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+              <p class="article-content">{{ post.content|slice:"0:5" }}...</p>
+              <a href="{% url 'postdetail' post.pk %}" class="stretched-link">more</a>
+            </div>
+            <div class="card-footer">
+                <div class="mb-1 text-muted">{{ post.date_posted|date:"Y, M, d" }} by {{ post.author }}</div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}

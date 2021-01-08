@@ -1,0 +1,70 @@
+
+{% extends 'posts/base.html' %}
+
+{% block content %}
+<div style="margin:30px 0px 100px 0px;" class="content-section">
+
+    <form method='POST'>
+
+        {% csrf_token %}
+        Title： {{ postFilter.form.title }}
+        Content: {{ postFilter.form.content }}
+        Category： {{ postFilter.form.category }}
+        Author: {{ postFilter.form.author }}
+        Date: {{ postFilter.form.date_posted }}
+
+
+    <input style="margin: 30px 0px 20px 0px" type="submit" class="btn btn-primary" value="Search" />
+    </form>
+
+    <div class="row">
+        <h1 class="mb-0">Search Result</h1>
+        {% for post in postFilter.qs %}
+
+        <div class="col-lg-4">
+            <div class="card mt-4" style="width: 20rem;height: 17rem;">
+                <div class="card-header" style="width: 20rem;height: 7rem;">
+                    <div class="row">
+                        <div class="col-3">
+                            <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+                        </div>
+                        <div class="col-8">
+                            <h6><strong class="d-inline-block mb-12 text-primary">{{ post.category }}</strong></h6>
+                        </div>
+                        <div class="col-12">
+                            <h4 class="mb-0" align=justify>{{ post.title }}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" style="width: 20rem;height: 7rem;">
+                  <p class="article-content">{{ post.content|slice:"0:20" }}...</p>
+                  <a href="{% url 'postdetail' post.pk %}" class="stretched-link">more</a>
+                </div>
+                <div class="card-footer">
+                    <div class="mb-1 text-muted">{{ post.date_posted|date:"Y, M, d" }} by {{ post.author }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+
+<!--    <div class="sidenav">
+      <h5 style="margin: 0px 0px 10px 45px;font-family:sans-serif;"></h5>
+        <form method="POST">
+            {% csrf_token %}
+            <ul style="color:#FF1493" class="list-group">
+                <li class="list-group-item list-group-item-light">Title：{{ postFilter.form.title }}</li>
+                <li class="list-group-item list-group-item-light">Content : {{ postFilter.form.content }}</li>
+                <li class="list-group-item list-group-item-light">Category：{{ postFilter.form.category }}</li>
+                <li class="list-group-item list-group-item-light">Author : {{ postFilter.form.author }}</li>
+                <li class="list-group-item list-group-item-light">Date : {{ postFilter.form.date_posted }}</li>
+                <input style="margin: 30px 0px 20px 0px" type="submit" class="btn btn-primary" value="Search" />
+            </ul>
+        </form>
+    </div>-->
+
+
+
+{% endblock %}

@@ -1,0 +1,50 @@
+
+{% extends 'posts/base.html' %}
+
+{% block content %}
+<div style="margin:30px 0px 100px 0px;" class="content-section">
+
+    <form method='POST'>
+
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-6">
+                Name：{{ primerFilter.form.name }}
+            </div>
+            <div class="col-6">
+                Modification : {{ primerFilter.form.modification }}
+            </div>
+            Sequence : {{ primerFilter.form.sequence }}
+            Purpose：{{ primerFilter.form.purpose }}
+
+        </div>
+
+
+
+
+    <input style="margin: 30px 0px 20px 0px" type="submit" class="btn btn-primary" value="Search" />
+    </form>
+
+
+
+ <h1>Primer Search</h1>
+        <table class="table table-light table-hover">
+            <tr>
+                <th scope="col">Primer Name</th>
+                <th scope="col">Modification</th>
+                <th scope="col">Sequence (5' to 3')</th>
+
+            </tr>
+
+            {% for primer in primerFilter.qs %}
+            <tr>
+            <th scope="row"><a href="{% url 'primerinfo' primer.pk %}">{{primer.name}}</th>
+                <td>{{primer.modification}}</td>
+                <td>{{primer.sequence}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+
+
+{% endblock %}

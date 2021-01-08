@@ -1,0 +1,18 @@
+{% extends 'posts/base.html' %}
+{% load crispy_forms_tags %}
+
+
+<!--{% block sidetitle %}-->
+<!--<a href="{% url 'primerinput' %}" style="font-size:20px;" >PrimerInput</a>-->
+<!--<a href="{% url 'primerlist' %}" style="font-size:20px;" >PrimerList</a>-->
+<!--{% endblock %}-->
+
+
+{% block content %}
+    <h1>Primer Upload</h1>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" class="btn btn-outline-primary" value="submit" style="position: absolute; right: 0.1;"/>
+    </form>
+{% endblock %}

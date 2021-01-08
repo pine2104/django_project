@@ -1,0 +1,68 @@
+
+{% extends 'posts/base.html' %}
+
+{% block content %}
+<div style="margin:30px 0px 100px 0px;" class="content-section">
+
+    <form method='POST'>
+        {% csrf_token %}
+
+        <div class="row">
+            Title：{{ jcFilter.form.title }}
+            <div class="col-5" style="margin: 25px 0px 60px 0px;">
+                Host by：{{ jcFilter.form.presenter }}
+            </div>
+
+            <div class="col-6">
+                Journal : {{ jcFilter.form.journal }}
+            </div>
+
+            <div class="col-5">
+
+                Date : {{ jcFilter.form.date_posted }}
+            </div>
+
+            <div class="col-5" style="margin: 0px 0px 0px 0px;">
+                HWL Recommend?：{{ jcFilter.form.hwl_recommend }}
+            </div>
+
+        </div>
+
+
+    <input style="margin: 30px 0px 20px 0px" type="submit" class="btn btn-primary" value="Search" />
+    </form>
+
+    <div class="row">
+        <h1 class="mb-0">Search Result</h1>
+        {% for post in jcFilter.qs %}
+        <div class="col-lg-6" style="margin: 20px 0px 0px 0px;">
+            <div class="card mt-6">
+                <div class="card-header" style="height: 10rem;">
+                    <div class="row">
+                        <div class="col-3">
+                            <img class="rounded-circle article-img" src="{{ post.presenter.profile.image.url }}">
+                        </div>
+                        <div class="col-8">
+                            <h6><strong class="d-inline-block mb-12 text-primary">{{ post.journal }}</strong></h6>
+                        </div>
+                        <div class="col-12">
+                            <h4 class="mb-0" align=justify>{{ post.title }}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" style="height: 8rem;">
+                  <p class="article-content">{{ post.content|slice:"0:20" }}...</p>
+                  <a href="{% url 'JCdetail' post.pk %}" class="stretched-link">more</a>
+                </div>
+                <div class="card-footer" style="height: 6rem;">
+                    <div class="mb-12 text-muted">Time: {{ post.time|date:"Y-m-d ,D" }} at {{ post.time|date:"H" }} o'clock </div>
+                    <div class="mb-12 text-muted"> Location: {{ post.location }}, Hosted by {{ post.presenter }}</div>
+                    <div class="mb-12 text-muted">Posted on {{ post.date_posted|date:"Y, M, d" }}</div>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% endblock %}
