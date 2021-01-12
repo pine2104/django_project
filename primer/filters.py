@@ -27,7 +27,7 @@ class PrimerFilter(django_filters.FilterSet):
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
 
-
+    position = django_filters.RangeFilter()
 
     class Meta:
         model = Primer

@@ -22,7 +22,7 @@ class PostFilter(django_filters.FilterSet):
 
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = ['title', 'content', 'category', 'author', 'date_posted']
 
 class JCFilter(django_filters.FilterSet):
 

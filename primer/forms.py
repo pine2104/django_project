@@ -4,7 +4,7 @@ from .models import Primer
 class PrimerForm(forms.ModelForm):
     class Meta:
         model = Primer
-        fields = ['name', 'sequence', 'can_pcr', 'modification', 'who_ordered', 'purpose', 'price', 'volumn', 'brand']
+        fields = ['name', 'project' ,'sequence', 'length', 'can_pcr', 'vector', 'modification', 'who_ordered', 'purpose', 'price', 'volumn', 'brand']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'ex: p123'}),
             'sequence': forms.TextInput(attrs={'class': 'form-control',

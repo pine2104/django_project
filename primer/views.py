@@ -38,18 +38,17 @@ class PrimerListView(ListView):
     ordering = ['-created_at']
 
 
-class PrimerForm(FormView):
+class PrimerFormView(FormView):
     template_name = 'primer/primer_form.html'
     form_class = PrimerForm
     # model = Primer
     success_url = reverse_lazy('primerlist')  # back to url name: fileupload (in urls)
+
     # context = {'form': }
     def form_valid(self, form): # FormView does not save, you need to add
         form.instance.created_by = self.request.user
         form.save()
-        return super(PrimerForm, self).form_valid(form)
-
-
+        return super(PrimerFormView, self).form_valid(form)
 
 class PrimerUploadView(CreateView):
     model = UploadPrimer
@@ -63,9 +62,10 @@ class PrimerDetailView(DetailView):
     model = Primer
     template_name = 'primer/primer_detail.html'
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(PrimerDetailView, self).get_context_data(**kwargs)
         context['primers'] = Primer.objects.all()
         context['all_fields'] = Primer._meta.fields
+        context['form'] = PrimerForm
         return context
 
 
@@ -91,34 +91,68 @@ def delblank(request):
     primers = Primer.objects.all()
     seq = pbr.sequence
     seq = Dseq(seq.replace(' ', ''))
+    L = len(str(seq))
     rseq = seq.reverse_complement()
     poss = []
     for primer in primers:
         p_seq = Dseq(primer.sequence.replace(' ', ''))
         p_seq_s = str(p_seq)
+        Lp = len(p_seq_s)
         if seq.find(str.lower(p_seq_s)) != -1: # match it
-            pos = seq.find(str.lower(p_seq_s))
+            position = seq.find(str.lower(p_seq_s)) + 1
+            dir = 'forward'
+            in_vector = True
         elif rseq.find(str.lower(p_seq_s)) != -1:
-            pos = rseq.find(str.lower(p_seq_s)) * (-1)
+            position = rseq.find(str.lower(p_seq_s)) - L - 1
+            dir = 'reverse'
+            in_vector = True
         else:
-            pos = 'none'
-        primer.pos = str(pos)
+            position = -1
+            dir = 'none'
+            in_vector = False
+        primer.position = position
+        primer.dir = dir
+        primer.in_vector = in_vector
+        primer.length = Lp
+        primer.save()
 
-    #
-    # seq2 = seq[0:100] + '\n' +seq[101:200] + '\n'
-    # + '\n' + seq[101:200] + '\n'
-    # seq3 = Dseq(seq[0:100] ,circular = True)
-    # rev_3 = seq3.reverse_complement()
-    # rev_3s = str(rev_3)[::-1]
-    # match_3 = seq3.find('atgtttgacagctta')
+    primers = primers.filter(in_vector=True).order_by('position')
+    # primers = Primer.objects.all().order_by('-created_at')
+    primerFilter = PrimerFilter(queryset=primers)
 
-    # L = len(seq)
-    L=1
-    seq2=1
-    seq3=1
-    rev_3s=1
-    match_3=1
+    if request.method == 'POST' and 'Search' in request.POST:
+        primerFilter = PrimerFilter(request.POST, queryset=primers)
 
-    return render(request, template_name='primer/seq.html', context={'seq': seq, 'L': L, 'seq2': seq2, 'seq3': seq3,
-                                                                     'rev_3': rev_3s, 'match_3': match_3, 'poss': poss,
-                                                                     'primers': primers})
+    L = len(str(seq))
+
+    # if request.method == 'POST' and 'cal' in request.POST:
+    check_box_list = request.POST.getlist("check_box")
+    if len(check_box_list) == 2:
+        primer_1 = Primer.objects.get(id=check_box_list[0])
+        primer_2 = Primer.objects.get(id=check_box_list[1])
+        if primer_1.dir == 'reverse':
+            pr = primer_1.position
+            pf = primer_2.position
+        else:
+            pr = primer_2.position
+            pf = primer_1.position
+        if abs(pr) > abs(pf):
+            L_pcr = -pr - pf
+        else:
+            L_pcr = L - pr - pf
+    else:
+        L_pcr = 0
+
+
+    return render(request, template_name='primer/seq.html', context={'seq': seq, 'L': L, 'primers': primers,
+                                                                     'primerFilter': primerFilter,
+                                                                     'check_box_list': check_box_list,
+                                                                     'L_pcr': L_pcr})
+
+class VectorCreateView(LoginRequiredMixin, CreateView):
+    model = Vector
+    template_name = 'primer/vector_form.html'
+    fields = ['name', 'sequence']
+    success_url = '/'
+    def form_valid(self, form): # make authen to the user, over-write this fun.
+        return super().form_valid(form)

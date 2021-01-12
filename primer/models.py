@@ -8,6 +8,8 @@ from django import forms
 class Vector(models.Model):
     name = models.CharField(max_length=50)
     sequence = models.CharField(max_length=20000)  # 5' to 3'
+    def __str__(self):
+        return f'{self.name}'
 
 class Project(models.Model):
     name = models.CharField(max_length=50, default='TPM')
@@ -17,8 +19,14 @@ class Project(models.Model):
 class Primer(models.Model):
     name = models.CharField(max_length=50)
     sequence = models.CharField(max_length=500) # 5' to 3'
-    # project = models.ForeignKey(Project, on_delete=models.CASCADE, default=1)
+    length = models.IntegerField(blank=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, default=1)
     can_pcr = models.BooleanField(default=True) # for pcr or not
+    vector = models.ForeignKey(Vector, on_delete=models.CASCADE, default=1, related_name='vector')
+    in_vector = models.BooleanField(default=True)
+    dir = models.CharField(max_length=10, default='none')
+    # position = models.CharField(max_length=10, default='none')
+    position = models.IntegerField(default=-1)
     modification = models.CharField(max_length=200)
     who_ordered = models.CharField(max_length=50)
     purpose = models.CharField(max_length=200, blank = True)

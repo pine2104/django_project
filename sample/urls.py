@@ -62,7 +62,7 @@ urlpatterns = [
 
     path('fileupload/', uploader_views.UploadView.as_view(), name='fileupload'), #its name is 'fileupload'
     path('delete/<int:pk>/', uploader_views.FileDeleteView.as_view(), name='delete'),
-    path('primerinput/', login_required(primer_views.PrimerForm.as_view()), name='primerinput'),
+    path('primerinput/', login_required(primer_views.PrimerFormView.as_view()), name='primerinput'),
     # path('primer/new/', primer_views.PrimerCreateView.as_view(), name='primercreate'),
     path('primer/', primer_views.index, name='primer'),
     path('primerlist/', primer_views.PrimerListView.as_view(), name='primerlist'),
@@ -71,7 +71,7 @@ urlpatterns = [
     path('primer/<int:pk>/update', primer_views.PrimerUpdateView.as_view(), name='primerupdate'),
     path('primer/<int:pk>/delete/', primer_views.PrimerDeleteView.as_view(), name='primerdelete'),
     path('seq/', primer_views.delblank, name='seq'),
-
+    path('vector/new/', primer_views.VectorCreateView.as_view(), name='vector_create'),
 
     path('mypost/', posts_views.userprofile, name='myposts'),
     path('protocols/TPM/', posts_views.protocols_TPM, name='protocols_TPM'),

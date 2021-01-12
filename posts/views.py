@@ -38,7 +38,7 @@ def home(request):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'category', 'content']
+    fields = ['title', 'category', 'file', 'content']
     success_url = '/'
 
     def form_valid(self, form): # make authen to the user, over-write this fun.
@@ -70,7 +70,7 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'category', 'content']
+    fields = ['title', 'category', 'file', 'content']
 
     def form_valid(self, form): # make authen to the user, over-write this function.
         form.instance.author = self.request.user

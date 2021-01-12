@@ -3,40 +3,74 @@
 
 {% block content %}
 
-seq: {{ seq }}
+<!--seq: {{ seq }}-->
 
-seq2: <p>{{ seq2 }}</p>
+<div style="margin:30px 0px 100px 0px;" class="content-section">
 
-seq3 (5' to 3'): <p>{{ seq3 }}</p>
+    <form method='POST'>
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-3">
+                Name：{{ primerFilter.form.name }}
+            </div>
+            <div class="col-3">
+                Modification : {{ primerFilter.form.modification }}
+            </div>
+            <div class="col-3">
+                Direction : {{ primerFilter.form.dir }}
+            </div>
+            <div class="col-12">
+                Sequence : {{ primerFilter.form.sequence }}
+            </div>
+            <div class="col-3">
+                Position：{{ primerFilter.form.position }}
+            </div>
 
-rev_3 (3' to 5'): <p>{{ rev_3 }}</p>
-
-match_3 : <p>{{ match_3 }}</p>
+        </div>
 
 
+<!--    <button style="margin: 30px 0px 20px 0px" type="submit" class="btn btn-primary" value="Search" name="Search"</button>-->
+        <input style="margin: 30px 0px 20px 0px" type="submit" class="btn btn-primary" value="Search" name="Search"/>
 
-<p>Length: {{ L }}</p>
+    </form>
+</div>
+
+<!--<p>Length of Vector (L): {{ L }}</p>-->
+<!--<h3><strong>PCR product Calculating Equation: L-Pf-Pr</strong></h3>-->
+<h3>PCR product: {{ L_pcr }} bp</h3>
+ <h1>Primer Search Result</h1>
+<form action="" method="POST">
+    {% csrf_token %}
+    <input style="margin: 30px 0px 20px 0px" type="submit" class="btn btn-primary" value="cal pcr" name="cal" />
 
 
+    <table class="table table-light table-hover">
+        <tr>
+            <th scope="col">Select</th>
+            <th scope="col">Primer Name</th>
+            <th scope="col">Modification</th>
+            <th scope="col">Primer Length</th>
+            <th scope="col">Direction</th>
+            <th scope="col">Position</th>
+            <th scope="col">Sequence (5' to 3')</th>
 
+        </tr>
 
- <h1>Primer Result</h1>
-        <table class="table table-light table-hover">
-            <tr>
-                <th scope="col">Primer Name</th>
-                <th scope="col">Position</th>
-                <th scope="col">Sequence (5' to 3')</th>
+        {% for primer in primerFilter.qs %}
+        <tr>
+            <td><input type="checkbox" value={{primer.id}} name="check_box"/></td>
+        <th scope="row"><a href="{% url 'primerinfo' primer.pk %}">{{primer.name}}</th>
+            <td>{{primer.modification}}</td>
+            <td>{{primer.length}}</td>
+            <td>{{primer.dir}}</td>
+            <td>{{primer.position}}</td>
+            <td>{{primer.sequence}}</td>
+        </tr>
+        {% endfor %}
+    </table>
 
-            </tr>
+</form>
 
-            {% for primer in primers %}
-            <tr>
-            <th scope="row"><a href="{% url 'primerinfo' primer.pk %}">{{primer.name}}</th>
-                <td>{{primer.pos}}</td>
-                <td>{{primer.sequence}}</td>
-            </tr>
-            {% endfor %}
-        </table>
 
 
 {% endblock %}

@@ -5,7 +5,6 @@
 <div style="margin:30px 0px 100px 0px;" class="content-section">
 
     <form method='POST'>
-
         {% csrf_token %}
         <div class="row">
             <div class="col-6">
@@ -18,9 +17,6 @@
             Purpose：{{ primerFilter.form.purpose }}
 
         </div>
-
-
-
 
     <input style="margin: 30px 0px 20px 0px" type="submit" class="btn btn-primary" value="Search" />
     </form>

@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="content-section">
-        <form method="POST">
+        <form action='' method="POST" enctype='multipart/form-data'>
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Create Your Post</legend>
@@ -14,6 +14,9 @@
                     </div>
                     <div class="col-6">
                         {{ form.category|as_crispy_field }}
+                    </div>
+                    <div class="col-6">
+                        {{ form.file }}
                     </div>
                 </div>
                 {{ form.content|as_crispy_field }}
