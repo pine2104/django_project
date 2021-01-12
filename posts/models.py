@@ -3,6 +3,11 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 # Create your models here.
+def make_file_path(instance, filename):
+
+   pid = instance.category
+   path = f'protocols/{pid}/{filename}'
+   return path
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -13,7 +18,7 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=100)
     category = models.ForeignKey('Category', related_name='Project', null=True, on_delete=models.CASCADE)
-    file = models.FileField(upload_to=f'Protocols/{category.__str__}/', blank=True)
+    file = models.FileField(upload_to=make_file_path, blank=True)
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -26,6 +31,7 @@ class Post(models.Model):
 
     # def get_upload_to(self, attname):
     #     return f'Protocols/{self.id}/'
+
 
 class Jcpaper(models.Model):
     title = models.CharField(max_length=200)
