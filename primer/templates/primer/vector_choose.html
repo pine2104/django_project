@@ -1,0 +1,33 @@
+{% extends 'posts/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{{vector}}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Choose Vector to PCR</legend>
+
+                <div class="article-metadata">
+                  <div>
+                      <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'vector_create' %}">Create New Vector</a>
+                      <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'vector_index' %}">View Vectors</a>
+
+                  </div>
+                </div>
+                <select name="vector_choice">
+                    <option  value="" selected="selected">---SELECT---</option>
+                    {% for vector in vectors %}
+                    <option  value="{{vector.id}}" selected="selected">{{vector.name}}</option>
+                    {% endfor %}
+                </select>
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}
+

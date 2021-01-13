@@ -19,7 +19,7 @@ class Project(models.Model):
 class Primer(models.Model):
     name = models.CharField(max_length=50)
     sequence = models.CharField(max_length=500) # 5' to 3'
-    length = models.IntegerField(blank=True)
+    length = models.IntegerField(blank=True, default=-1)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, default=1)
     can_pcr = models.BooleanField(default=True) # for pcr or not
     vector = models.ForeignKey(Vector, on_delete=models.CASCADE, default=1, related_name='vector')

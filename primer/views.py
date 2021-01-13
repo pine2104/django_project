@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.views.generic import CreateView, DeleteView, DetailView, UpdateView, ListView
@@ -75,8 +75,8 @@ class PrimerUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse('primerinfo', kwargs={'pk': self.object.id})
     def form_valid(self, form): # make authen to the user, over-write this function.
-        form.instance.created_at = datetime.datetime.now()
-        form.instance.created_by = self.request.user
+        form.instance.edit_at = datetime.datetime.now()
+        form.instance.edit_by = self.request.user
         return super().form_valid(form)
 
 
@@ -85,11 +85,43 @@ class PrimerDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'primer/primer_confirm_delete.html'
     success_url = '/'
 
+class PrimerVectorUpdateView(LoginRequiredMixin, UpdateView):
+    model = Primer
+    fields = ['vector']
+    template_name = 'primer/primervector_update.html'
+    # def get_success_url(self):
+    #     return reverse('seq')
+    # def form_valid(self, form): # make authen to the user, over-write this function.
+    #     form.instance.edit_at = datetime.datetime.now()
+    #     form.instance.edit_by = self.request.user
+    #     return super().form_valid(form)
 
-def delblank(request):
-    pbr = Vector.objects.get(name='pbr322')
+
+@login_required
+def SelectVector(request):
+    vectors = Vector.objects.all()
     primers = Primer.objects.all()
-    seq = pbr.sequence
+    template_name = 'primer/vector_choose.html'
+    context = {
+        'vectors': vectors,
+    }
+    if request.method == 'POST':
+        id = request.POST["vector_choice"]
+        vector = Vector.objects.get(id=id)
+        for primer in primers:
+            primer.vector = vector
+            primer.save() # update choose vector and redirect to result
+        # return render(request, template_name, context={'vector': vector})
+        return redirect('seq')
+
+    return render(request, template_name, context)
+
+def calpcr(request):
+    # pbr = Vector.objects.get(name='pbr322')
+    primers = Primer.objects.all()
+    vector = primers[0].vector
+    vector_name = vector.name
+    seq = str.lower(vector.sequence)
     seq = Dseq(seq.replace(' ', ''))
     L = len(str(seq))
     rseq = seq.reverse_complement()
@@ -130,24 +162,27 @@ def delblank(request):
     if len(check_box_list) == 2:
         primer_1 = Primer.objects.get(id=check_box_list[0])
         primer_2 = Primer.objects.get(id=check_box_list[1])
-        if primer_1.dir == 'reverse':
+        if primer_1.dir == 'reverse' and primer_2.dir == 'forward':
             pr = primer_1.position
             pf = primer_2.position
-        else:
+        elif primer_2.dir == 'reverse' and primer_1.dir == 'forward':
             pr = primer_2.position
             pf = primer_1.position
-        if abs(pr) > abs(pf):
+        else:
+            pr = 0
+            pf = 0
+        if abs(pr) >= abs(pf):
             L_pcr = -pr - pf
         else:
             L_pcr = L - pr - pf
     else:
         L_pcr = 0
 
-
     return render(request, template_name='primer/seq.html', context={'seq': seq, 'L': L, 'primers': primers,
                                                                      'primerFilter': primerFilter,
                                                                      'check_box_list': check_box_list,
-                                                                     'L_pcr': L_pcr})
+                                                                     'L_pcr': L_pcr, 'vector_name': vector_name})
+
 
 class VectorCreateView(LoginRequiredMixin, CreateView):
     model = Vector
@@ -156,3 +191,12 @@ class VectorCreateView(LoginRequiredMixin, CreateView):
     success_url = '/'
     def form_valid(self, form): # make authen to the user, over-write this fun.
         return super().form_valid(form)
+
+
+def vector_index(request):
+    vectors = Vector.objects.all()
+    template_name = 'primer/vector_index.html'
+    context = {
+        'vectors': vectors,
+    }
+    return render(request, template_name, context)

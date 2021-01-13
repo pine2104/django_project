@@ -1,0 +1,16 @@
+{% extends 'posts/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="content-section" style="margin:30px 0px 100px 0px;">
+    <h1>Choose Vector to PCR</h1>
+    <form method="post" enctype="multipart/form-data">
+        <div class="container">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+        </div>
+        <input style="margin:30px 0px 30px 30px;" type="submit" class="btn-lg btn-outline-primary" value="submit" "/>
+    </form>
+</div>
+
+{% endblock %}

@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 # Create your models here.
 def make_file_path(instance, filename):
-
    pid = instance.category
    path = f'protocols/{pid}/{filename}'
    return path

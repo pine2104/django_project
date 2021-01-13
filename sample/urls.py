@@ -70,8 +70,11 @@ urlpatterns = [
     path('primer/<int:pk>/', primer_views.PrimerDetailView.as_view(), name='primerinfo'),
     path('primer/<int:pk>/update', primer_views.PrimerUpdateView.as_view(), name='primerupdate'),
     path('primer/<int:pk>/delete/', primer_views.PrimerDeleteView.as_view(), name='primerdelete'),
-    path('seq/', primer_views.delblank, name='seq'),
+    path('seq/vector/', primer_views.SelectVector, name='seqvector'),
+    # path('seq/vector/', primer_views.PrimerVectorUpdateView.as_view(), name='seqvector'),
+    path('seq/', primer_views.calpcr, name='seq'),
     path('vector/new/', primer_views.VectorCreateView.as_view(), name='vector_create'),
+    path('vector/', primer_views.vector_index, name='vector_index'),
 
     path('mypost/', posts_views.userprofile, name='myposts'),
     path('protocols/TPM/', posts_views.protocols_TPM, name='protocols_TPM'),
