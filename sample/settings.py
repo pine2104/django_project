@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
-    'homepage.apps.HomepageConfig',
+    # 'homepage.apps.HomepageConfig',
     'uploader.apps.UploaderConfig',
     'django_cleanup',
     'primer.apps.PrimerConfig',
@@ -52,8 +52,8 @@ INSTALLED_APPS = [
     'index.apps.IndexConfig',
     # 'pollform.apps.PollformConfig',
     'bootstrap_datepicker_plus',
-    'bootstrap4'
-
+    'bootstrap4',
+    'django_tables2',
 
 ]
 
@@ -176,3 +176,5 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 DATETIME_INPUT_FORMATS = ['%Y.%m.%d %H']
+
+DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"

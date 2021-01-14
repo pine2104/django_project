@@ -1,6 +1,5 @@
 {% extends 'posts/base.html' %}
 
-
 {% block content %}
 
 <!--seq: {{ seq }}-->
@@ -10,18 +9,18 @@
     <form method='POST'>
         {% csrf_token %}
         <div class="row">
-            <div class="col-3">
-                Name：{{ primerFilter.form.name }}
-            </div>
-            <div class="col-3">
-                Modification : {{ primerFilter.form.modification }}
-            </div>
-            <div class="col-3">
-                Direction : {{ primerFilter.form.dir }}
-            </div>
-            <div class="col-12">
-                Sequence : {{ primerFilter.form.sequence }}
-            </div>
+<!--            <div class="col-3">-->
+<!--                Name：{{ primerFilter.form.name }}-->
+<!--            </div>-->
+<!--            <div class="col-3">-->
+<!--                Modification : {{ primerFilter.form.modification }}-->
+<!--            </div>-->
+<!--            <div class="col-3">-->
+<!--                Direction : {{ primerFilter.form.dir }}-->
+<!--            </div>-->
+<!--            <div class="col-12">-->
+<!--                Sequence : {{ primerFilter.form.sequence }}-->
+<!--            </div>-->
             <div class="col-3">
                 Position：{{ primerFilter.form.position }}
             </div>
@@ -35,39 +34,77 @@
     </form>
 </div>
 
-<h3>Length of Vector, {{vector_name}}: {{ L }} bp</h3>
+<h3><strong>Length of Vector, {{vector_name}}:</strong> {{ L }} bp</h3>
 <!--<h3><strong>PCR product Calculating Equation: L-Pf-Pr</strong></h3>-->
-<h3>PCR product: {{ L_pcr }} bp</h3>
+<h3><strong>PCR product:</strong> {{ L_pcr }} bp ({{ primer_name }})</h3>
 
 <form action="" method="POST">
     {% csrf_token %}
     <input style="margin: 30px 0px 20px 0px" type="submit" class="btn btn-primary" value="cal pcr" name="cal" />
  <h1>Primer Search Result</h1>
+    <div class="row">
 
-    <table class="table table-light table-hover">
-        <tr>
-            <th scope="col">Select</th>
-            <th scope="col">Primer Name</th>
-            <th scope="col">Modification</th>
-            <th scope="col">Primer Length</th>
-            <th scope="col">Direction</th>
-            <th scope="col">Position</th>
-            <th scope="col">Sequence (5' to 3')</th>
 
-        </tr>
+    <div class="col-6">
 
-        {% for primer in primerFilter.qs %}
-        <tr>
-            <td><input type="checkbox" value={{primer.id}} name="check_box"/></td>
-        <th scope="row"><a href="{% url 'primerinfo' primer.pk %}">{{primer.name}}</th>
-            <td>{{primer.modification}}</td>
-            <td>{{primer.length}}</td>
-            <td>{{primer.dir}}</td>
-            <td>{{primer.position}}</td>
-            <td>{{primer.sequence}}</td>
-        </tr>
-        {% endfor %}
-    </table>
+        <table class="table table-light table-hover">
+            <tr>
+                <th scope="col">Select</th>
+                <th scope="col">Primer Name</th>
+                <th scope="col">Modification</th>
+    <!--            <th scope="col">Primer Length</th>-->
+    <!--            <th scope="col">Direction</th>-->
+                <th scope="col">Position</th>
+    <!--            <th scope="col">Sequence (5' to 3')</th>-->
+
+            </tr>
+
+            {% for primer in primerFilter.qs %}
+            {% if primer.position <= 0 %}
+            <tr>
+                <td><input type="checkbox" value={{primer.id}} name="check_box"/></td>
+            <th scope="row"><a href="{% url 'primerinfo' primer.pk %}">{{primer.name}}</th>
+                <td>{{primer.modification}}</td>
+    <!--            <td>{{primer.length}}</td>-->
+    <!--            <td>{{primer.dir}}</td>-->
+                <td>{{primer.position}}</td>
+    <!--            <td>{{primer.sequence}}</td>-->
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="col-6">
+
+        <table class="table table-light table-hover">
+            <tr>
+                <th scope="col">Select</th>
+                <th scope="col">Primer Name</th>
+                <th scope="col">Modification</th>
+    <!--            <th scope="col">Primer Length</th>-->
+    <!--            <th scope="col">Direction</th>-->
+                <th scope="col">Position</th>
+    <!--            <th scope="col">Sequence (5' to 3')</th>-->
+
+            </tr>
+
+            {% for primer in primerFilter.qs %}
+            {% if primer.position > 0 %}
+            <tr>
+                <td><input type="checkbox" value={{primer.id}} name="check_box"/></td>
+            <th scope="row"><a href="{% url 'primerinfo' primer.pk %}">{{primer.name}}</th>
+                <td>{{primer.modification}}</td>
+    <!--            <td>{{primer.length}}</td>-->
+    <!--            <td>{{primer.dir}}</td>-->
+                <td>{{primer.position}}</td>
+    <!--            <td>{{primer.sequence}}</td>-->
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+</div>
 
 </form>
 

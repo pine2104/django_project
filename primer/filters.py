@@ -17,7 +17,17 @@ class PrimerFilter(django_filters.FilterSet):
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
 
-    modification = django_filters.CharFilter(
+    modification_5 = django_filters.CharFilter(
+        lookup_expr='icontains',
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+
+    modification_3 = django_filters.CharFilter(
+        lookup_expr='icontains',
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+
+    modification_internal = django_filters.CharFilter(
         lookup_expr='icontains',
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )

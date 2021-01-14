@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+import django_tables2 as tables
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 from django import forms
 
@@ -19,7 +21,10 @@ class Project(models.Model):
 class Primer(models.Model):
     name = models.CharField(max_length=50)
     sequence = models.CharField(max_length=500) # 5' to 3'
-    length = models.IntegerField(blank=True, default=-1)
+    length = models.IntegerField(blank=True, default=1, validators=[
+            MaxValueValidator(1000),
+            MinValueValidator(1)
+        ])
     project = models.ForeignKey(Project, on_delete=models.CASCADE, default=1)
     can_pcr = models.BooleanField(default=True) # for pcr or not
     vector = models.ForeignKey(Vector, on_delete=models.CASCADE, default=1, related_name='vector')
@@ -27,7 +32,9 @@ class Primer(models.Model):
     dir = models.CharField(max_length=10, default='none')
     # position = models.CharField(max_length=10, default='none')
     position = models.IntegerField(default=-1)
-    modification = models.CharField(max_length=200)
+    modification_5 = models.CharField(max_length=200, default = 'none')
+    modification_3 = models.CharField(max_length=200, default = 'none')
+    modification_internal = models.CharField(max_length=200, default = 'none')
     who_ordered = models.CharField(max_length=50)
     purpose = models.CharField(max_length=200, blank = True)
     price = models.CharField(max_length=50, blank=True)
@@ -37,6 +44,10 @@ class Primer(models.Model):
     edit_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_by', default=1)
     edit_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='edit_by', default=1)
+
+class SimpleTable(tables.Table):
+    class Meta:
+        model = Primer
 
 class UploadPrimer(models.Model):
     excel_file = models.FileField() # .name, .size, .url, .open, .close, .save, .delete,

@@ -6,10 +6,9 @@ from .models import Primer, UploadPrimer, Project, Vector
 
 @admin.register(Primer)
 class PrimerAdmin(ImportExportModelAdmin):
- list_display = ('name', 'sequence', 'modification', 'who_ordered', 'purpose', 'price', 'volumn', 'brand', 'created_at')
+ list_display = ('name', 'sequence', 'modification_5', 'who_ordered', 'purpose', 'price', 'volumn', 'brand', 'created_at')
 
 # admin.site.register(Primer)
 admin.site.register(UploadPrimer)
 admin.site.register(Project)
 admin.site.register(Vector)
-

@@ -9,11 +9,104 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
+<!--    <link rel="stylesheet" type="text/css" href="{% static 'primer/primerlist.css' %}">-->
       <link rel="stylesheet" type="text/css" href="{% static 'posts/post.css' %}">
       <link rel="stylesheet" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}" />
+<!--    <link rel="stylesheet" type="text/css" href="{% static '/homepage/main.css' %}">-->
+        {% load bootstrap4 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript jquery='full' %}
+
+
 
 
     <style>
+    a:link {
+      color: black;
+      background-color: transparent;
+      text-decoration: none;
+    }
+
+    a:visited {
+      color: black;
+      background-color: transparent;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: red;
+      background-color: transparent;
+      text-decoration: underline;
+    }
+
+    a:active {
+      color: red;
+      background-color: transparent;
+      text-decoration: underline;
+    }
+
+
+    input[type=text] {
+      width: 100%;
+      padding: 10px 10px;
+      margin: 8px 0;
+      box-sizing: border-box;
+    }
+    .article-img {
+      height: 35px;
+      width: 35px;
+      margin-right: 1px;
+    }
+    .article-title {
+      color: #696969;
+    }
+    .article-content-d {
+      white-space: pre-line;
+      color: #000000;
+      font-size: 25px;
+
+    }
+      #home {
+<!--        width: 70px;-->
+<!--        height: 30px;-->
+<!--        border: 1px solid #c3c3c3;-->
+<!--        display: flex;-->
+<!--        flex-wrap: wrap;-->
+<!--        align-content: center;-->
+      }
+
+      #home div {
+      margin: 10px 0 0 0;
+
+      }
+
+      body {
+        font-family: "Lato", sans-serif;
+      }
+
+      .sidenav {
+        width: 270px;
+        position: fixed;
+        z-index: 1;
+        top: 100px;
+        right: 30px;
+        border: 1px solid #c3c3c3;
+<!--        background: #F0FFFF;-->
+        overflow-x: hidden;
+        padding: 10px 30px 10px 30px;
+      }
+
+      .sidenav a {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 20px;
+        color: #000000;
+        display: block;
+      }
+      .sidenav a:hover {
+        color: #064579;
+      }
+
 
 
     </style>
@@ -143,28 +236,28 @@
                         &copy; xxxxxxxxxxxxxxxx | <a href="/admin">admin login</a>                      </div>
           <div class="textright copyright-right">
 
-<!--		  <style>-->
-<!--		    .credits {-->
-<!--		      float: right;-->
-<!--		      text-align: right;-->
-<!--		      xfont-size: 12px;-->
-<!--		      color: #64696d;-->
-<!--		      xmargin-top: -.5em;-->
-<!--		    }-->
-<!--		    .logo {-->
-<!--		      display: inline-block;-->
-<!--		      position: static;-->
-<!--		      margin: 0;-->
-<!--		      xline-height: 79px;-->
-<!--		      text-align: left;-->
-<!--		    }-->
-<!--		    .credits .logo img {-->
-<!--		      width: 18px;-->
-<!--		      height: 18px;-->
-<!--		      xmargin-top: -4px;-->
-<!--		      margin-left: 4px;-->
-<!--		    }-->
-<!--      </style>-->
+		  <style>
+		    .credits {
+		      float: right;
+		      text-align: right;
+		      xfont-size: 12px;
+		      color: #64696d;
+		      xmargin-top: -.5em;
+		    }
+		    .logo {
+		      display: inline-block;
+		      position: static;
+		      margin: 0;
+		      xline-height: 79px;
+		      text-align: left;
+		    }
+		    .credits .logo img {
+		      width: 18px;
+		      height: 18px;
+		      xmargin-top: -4px;
+		      margin-left: 4px;
+		    }
+      </style>
 
       <div class="credits">
           xxxxxxxxxxxxxxxxxx
@@ -197,11 +290,65 @@
 			err += "</div>";
 				jQuery(sliderID).show().html(err);
 			}
-		}
+		}		</script>
+<link rel='stylesheet' id='akismet.css-css'  href='http://ha.med.jhmi.edu/wp-content/plugins/userway-accessibility-widget/assets/style.css?ver=5.5.3' type='text/css' media='all' />
+<script type='text/javascript' src='http://ha.med.jhmi.edu/wp-content/plugins/js_composer/assets/lib/bower/isotope/dist/isotope.pkgd.min.js?ver=6.0.5' id='isotope-js'></script>
+<script type='text/javascript' src='http://ha.med.jhmi.edu/wp-content/plugins/pendari-department/js/abram_functions.js?ver=5.5.3' id='abram_functions-js'></script>
+<script type='text/javascript' src='http://ha.med.jhmi.edu/wp-content/plugins/pendari-department/js/pendari.js?ver=5.5.3' id='pendari-js'></script>
+<script type='text/javascript' src='http://ha.med.jhmi.edu/wp-content/themes/Abram/js/abram-brad-love.js?ver=1.0' id='abram-brad-love-js'></script>
+<script type='text/javascript' src='http://ha.med.jhmi.edu/wp-includes/js/wp-embed.min.js?ver=5.5.3' id='wp-embed-js'></script>
+<script type='text/javascript' src='http://ha.med.jhmi.edu/wp-content/plugins/js_composer/assets/js/dist/js_composer_front.min.js?ver=6.0.5' id='wpb_composer_front_js-js'></script>
+<script type='text/javascript' src='http://ha.med.jhmi.edu/wp-content/themes/Abram/js/modernizr.js' id='modernizr-js'></script>
+<script type='text/javascript' src='http://ha.med.jhmi.edu/wp-content/themes/Abram/js/fitvids.min.js' id='fitvids-js'></script>
+<script type='text/javascript' src='http://ha.med.jhmi.edu/wp-content/themes/Abram/js/prettyPhoto.js' id='prettyPhoto-js'></script>
+<script type='text/javascript' src='http://ha.med.jhmi.edu/wp-content/themes/Abram/js/abram_brad_plugins.js' id='abram-brad-plugins-js'></script>
+<script type='text/javascript' src='http://ha.med.jhmi.edu/wp-content/themes/Abram/js/skrollr.js' id='skrollr-js'></script>
+<script type='text/javascript' src='http://ha.med.jhmi.edu/wp-content/themes/Abram/js/imagesloaded.js' id='jquery.imagesloaded-js'></script>
+<script type='text/javascript' src='http://ha.med.jhmi.edu/wp-content/themes/Abram/js/jquery.scrollTo.min.js' id='jquery.scrollTo-js'></script>
+<script type='text/javascript' src='http://ha.med.jhmi.edu/wp-content/themes/Abram/js/jquery.waypoints.js' id='waypoints-js'></script>
+<script type='text/javascript' id='abram-brad-main-js-extra'>
+/* <![CDATA[ */
+var abram_brad_main = {"url":"http:\/\/ha.med.jhmi.edu\/wp-content\/themes\/Abram","nomoreposts":"No more Posts to Load","nomoreprojects":"No more Projects to Load","ajaxurl":"http:\/\/ha.med.jhmi.edu\/wp-admin\/admin-ajax.php","contactNonce":"9f40977d70","onePageNav":"no"};
+/* ]]> */
 </script>
+<script type='text/javascript' src='http://ha.med.jhmi.edu/wp-content/themes/Abram/js/abram_brad_main.min.js' id='abram-brad-main-js'></script>
+<!-- Custom Scripts -->
+<script type="text/javascript">
+(function($){
+    'use strict';
+	jQuery(document).ready(function($){
 
 
+	  var retina = window.devicePixelRatio > 1 ? true : false;
+
+		/* ------------------------------------------------------------------------ */
+		/* Add PrettyPhoto */
+		/* ------------------------------------------------------------------------ */
+
+		var lightboxArgs = {
+						animation_speed: 'fast',
+						overlay_gallery: true,
+			autoplay_slideshow: false,
+						slideshow: 5000, /* light_rounded / dark_rounded / light_square / dark_square / facebook */
+									theme: 'pp_default',
+									opacity: 0.8,
+						show_title: true,
+						deeplinking: false,
+			allow_resize: true, 			/* Resize the photos bigger than viewport. true/false */
+			counter_separator_label: '/', 	/* The separator for the gallery counter 1 "of" 2 */
+			default_width: 1200,
+			default_height:640
+		};
+
+		jQuery("a[rel^='prettyPhoto']").prettyPhoto(lightboxArgs);
+
+
+			});
+}(jQuery))
+</script>
 <!-- End footer -->
+
+
 
 
     <!-- Optional JavaScript; choose one of the two! -->
