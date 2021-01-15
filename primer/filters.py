@@ -37,9 +37,9 @@ class PrimerFilter(django_filters.FilterSet):
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
 
-    position = django_filters.RangeFilter()
+    # position = django_filters.RangeFilter()
 
     class Meta:
         model = Primer
-        fields = '__all__'
+        fields = ['name', 'project', 'length', 'modification_5', 'modification_3', 'modification_internal', 'sequence', 'purpose']
 

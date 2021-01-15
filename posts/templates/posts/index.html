@@ -7,9 +7,9 @@
     <form method='POST'>
 
         {% csrf_token %}
-        Title： {{ postFilter.form.title }}
+        Title: {{ postFilter.form.title }}
         Content: {{ postFilter.form.content }}
-        Category： {{ postFilter.form.category }}
+        Category: {{ postFilter.form.category }}
         Author: {{ postFilter.form.author }}
         Date: {{ postFilter.form.date_posted }}
 

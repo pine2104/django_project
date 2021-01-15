@@ -19,24 +19,24 @@ import numpy as np
 
 
 
-def index(request):
-    primers = Primer.objects.all().order_by('-created_at')
-    primerFilter = PrimerFilter(queryset=primers)
+# def index(request):
+#     primers = Primer.objects.all().order_by('-created_at')
+#     primerFilter = PrimerFilter(queryset=primers)
+#
+#     if request.method == 'POST':
+#         primerFilter = PrimerFilter(request.POST, queryset=primers)
+#
+#     context = {
+#         'primerFilter':primerFilter
+#     }
+#     return render(request, 'primer/primer_index_notuse.html', context)
 
-    if request.method == 'POST':
-        primerFilter = PrimerFilter(request.POST, queryset=primers)
 
-    context = {
-        'primerFilter':primerFilter
-    }
-    return render(request, 'primer/primer_index.html', context)
-
-
-class PrimerListView(ListView):
-    model = Primer
-    template_name = 'primer/primer_list.html'
-    context_object_name = 'primers'
-    ordering = ['-created_at']
+# class PrimerListView(ListView):
+#     model = Primer
+#     template_name = 'primer/primer_list_notuse.html'
+#     context_object_name = 'primers'
+#     ordering = ['-created_at']
 
 
 class PrimerFormView(FormView):
@@ -217,11 +217,29 @@ def calpcr(request):
                                                                      'primer_name': primer_name,
                                                                      'L_pcr': L_pcr, 'vector_name': vector_name})
 
+
 tables.SingleTableView.table_pagination = False
 class TableView(tables.SingleTableView):
+    filter_class = None
+    # table_class = SimpleTable
+    # primers = Primer.objects.all()
+    # queryset = primers
+    # template_name = "primer/primer_list.html"
+    def get_table_data(self):
+        queryset_data = super(TableView, self).get_table_data()
+        self.filter = self.filter_class(self.request.GET, queryset=queryset_data)
+        return self.filter.qs
+
+    def get_context_data(self, **kwargs):
+        context = super(TableView, self).get_context_data(**kwargs)
+        context['filter'] = self.filter
+        return context
+
+class PrimerFilteredTableView(TableView):
+    model = Primer
     table_class = SimpleTable
-    queryset = Primer.objects.all()
-    template_name = "primer/primer_test.html"
+    template_name = "primer/primer_list.html"
+    filter_class = PrimerFilter
 
 
 class VectorCreateView(LoginRequiredMixin, CreateView):

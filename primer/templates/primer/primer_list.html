@@ -1,30 +1,42 @@
 {% extends 'posts/base.html' %}
+{% load django_tables2 %}
+
 {% block content %}
 
-<!--<div class="container">-->
-<!--    <div class="row">-->
-<div class="content-section" style="margin:30px 0px 100px 0px;">
-    <h1>Primer List</h1>
-        <table class="table table-light table-hover">
-            <tr>
-                <th scope="col">Primer Name</th>
-                <th scope="col">Modification</th>
-                <th scope="col">Sequence (5' to 3')</th>
+{% load bootstrap4 %}
 
-            </tr>
 
-            {% for primer in primers %}
-            <tr>
-            <th scope="row"><a href="{% url 'primerinfo' primer.pk %}">{{primer.name}}</th>
-                <td>{{primer.modification}}</td>
-                <td>{{primer.sequence}}</td>
-            </tr>
-            {% endfor %}
-        </table>
 
+<div style="margin:30px 0px 30px 0px;" class="content-section">
+    <form method='GET'>
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-12">
+                Name: {{ filter.form.name }}
+            </div>
+            <div class="col-3" style="margin:17px 0px 0px 0px;">
+                Project For: {{ filter.form.project }}
+            </div>
+            <div class="col-3">
+                5'Modification: {{ filter.form.modification_5 }}
+            </div>
+            <div class="col-3">
+                3'Modification: {{ filter.form.modification_3 }}
+            </div>
+            <div class="col-3">
+                internal-Modification: {{ filter.form.modification_internal }}
+            </div>
+            <div class="col-12">
+                Sequence: {{ filter.form.sequence }}
+            </div>
+            <div class="col-12">
+                Purpose: {{ filter.form.purpose }}
+            </div>
+        </div>
+    <input style="margin: 30px 0px 20px 0px" type="submit" class="btn btn-primary" value="Search" />
+    </form>
 </div>
 
-<!--    </div>-->
-<!--</div>-->
+{% render_table table 'django_tables2/bootstrap4.html' %}
 
 {% endblock %}
