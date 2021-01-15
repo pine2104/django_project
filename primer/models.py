@@ -20,6 +20,7 @@ class Project(models.Model):
 
 class Primer(models.Model):
     name = models.CharField(max_length=50)
+    bottle_name = models.CharField(max_length=100, default='same with name')
     sequence = models.CharField(max_length=500) # 5' to 3'
     length = models.IntegerField(blank=True, default=1, validators=[
             MaxValueValidator(1000),
@@ -37,6 +38,7 @@ class Primer(models.Model):
     modification_internal = models.CharField(max_length=200, default = 'none')
     who_ordered = models.CharField(max_length=50)
     purpose = models.CharField(max_length=200, blank = True)
+    place = models.CharField(max_length=50, blank=True, default='Project box')
     price = models.CharField(max_length=50, blank=True)
     volumn = models.CharField(max_length=50, blank=True) # conc. in 100 uM
     brand = models.CharField(max_length=50, blank=True) # which inc. produced

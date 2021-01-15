@@ -51,7 +51,7 @@
             <tr>
                 <th scope="col">Select</th>
                 <th scope="col">Primer Name</th>
-                <th scope="col">Modification</th>
+                <th scope="col">5'Modification</th>
     <!--            <th scope="col">Primer Length</th>-->
     <!--            <th scope="col">Direction</th>-->
                 <th scope="col">Position</th>
@@ -64,7 +64,7 @@
             <tr>
                 <td><input type="checkbox" value={{primer.id}} name="check_box"/></td>
             <th scope="row"><a href="{% url 'primerinfo' primer.pk %}">{{primer.name}}</th>
-                <td>{{primer.modification}}</td>
+                <td>{{primer.modification_5}}</td>
     <!--            <td>{{primer.length}}</td>-->
     <!--            <td>{{primer.dir}}</td>-->
                 <td>{{primer.position}}</td>
@@ -81,7 +81,7 @@
             <tr>
                 <th scope="col">Select</th>
                 <th scope="col">Primer Name</th>
-                <th scope="col">Modification</th>
+                <th scope="col">5'Modification</th>
     <!--            <th scope="col">Primer Length</th>-->
     <!--            <th scope="col">Direction</th>-->
                 <th scope="col">Position</th>
@@ -94,7 +94,7 @@
             <tr>
                 <td><input type="checkbox" value={{primer.id}} name="check_box"/></td>
             <th scope="row"><a href="{% url 'primerinfo' primer.pk %}">{{primer.name}}</th>
-                <td>{{primer.modification}}</td>
+                <td>{{primer.modification_5}}</td>
     <!--            <td>{{primer.length}}</td>-->
     <!--            <td>{{primer.dir}}</td>-->
                 <td>{{primer.position}}</td>

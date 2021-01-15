@@ -14,7 +14,9 @@ from .filters import PrimerFilter
 from pydna.dseq import Dseq
 import django_tables2 as tables
 from django.contrib.auth.decorators import login_required
-import django_excel as excel
+from .pcr import hamming_distance, match_primer
+
+# import django_excel as excel
 import numpy as np
 
 
@@ -117,6 +119,9 @@ def SelectVector(request):
 
     return render(request, template_name, context)
 
+
+
+
 def calpcr(request):
     # pbr = Vector.objects.get(name='pbr322')
     primers = Primer.objects.all()
@@ -216,7 +221,6 @@ def calpcr(request):
                                                                      'primerFilter': primerFilter,
                                                                      'primer_name': primer_name,
                                                                      'L_pcr': L_pcr, 'vector_name': vector_name})
-
 
 tables.SingleTableView.table_pagination = False
 class TableView(tables.SingleTableView):
