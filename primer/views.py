@@ -14,10 +14,8 @@ from .filters import PrimerFilter
 from pydna.dseq import Dseq
 import django_tables2 as tables
 from django.contrib.auth.decorators import login_required
-from .pcr import hamming_distance, match_primer
+from .pcr import hamming_distance, match_primer, plotpcr
 
-# import django_excel as excel
-import numpy as np
 
 
 
@@ -198,14 +196,23 @@ def calpcr(request):
         p1_name = primer_1.name
         primer_2 = Primer.objects.get(id=check_box_list[1])
         p2_name = primer_2.name
-        primer_name = [p1_name] + [p2_name]
+
 
         if primer_1.dir == 'reverse' and primer_2.dir == 'forward':
             pr = primer_1.position
+            pr_name = primer_1.name
+            pr_seq = primer_1.sequence
             pf = primer_2.position
+            pf_name = primer_2.name
+            pf_seq = primer_2.sequence
         elif primer_2.dir == 'reverse' and primer_1.dir == 'forward':
             pr = primer_2.position
+            pr_name = primer_2.name
+            pr_seq = primer_2.sequence
             pf = primer_1.position
+            pf_name = primer_1.name
+            pf_seq = primer_1.sequence
+
         else:
             pr = 0
             pf = 0
@@ -213,14 +220,21 @@ def calpcr(request):
             L_pcr = -pr - pf
         else:
             L_pcr = L - pr - pf
+        show_seq = plotpcr(str(seq), pf_seq, pr_seq)
+        primer_name = [pf_name] + [pr_name]
+        primer_position = [pf, pr]
     else:
-        L_pcr = 0
+        L_pcr = 'You can only select two primers!!'
         primer_name = ['','']
+        show_seq = "can't pcr"
+        primer_name = [''] + ['']
+        primer_position = ['x', 'x']
 
-    return render(request, template_name='primer/seq.html', context={'seq': seq, 'L': L, 'primers': primers,
-                                                                     'primerFilter': primerFilter,
-                                                                     'primer_name': primer_name,
-                                                                     'L_pcr': L_pcr, 'vector_name': vector_name})
+    return render(request, template_name='primer/seq.html',
+                  context={'seq': seq, 'L': L, 'primers': primers, 'show_seq': show_seq,
+                           'primerFilter': primerFilter, 'primer_name': primer_name,
+                           'L_pcr': L_pcr, 'vector_name': vector_name, 'primer_position': primer_position,
+                           })
 
 tables.SingleTableView.table_pagination = False
 class TableView(tables.SingleTableView):
