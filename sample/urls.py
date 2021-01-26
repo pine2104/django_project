@@ -63,7 +63,6 @@ urlpatterns = [
     path('fileupload/', uploader_views.UploadView.as_view(), name='fileupload'), #its name is 'fileupload'
     path('delete/<int:pk>/', uploader_views.FileDeleteView.as_view(), name='delete'),
     path('primerinput/', login_required(primer_views.PrimerFormView.as_view()), name='primerinput'),
-    # path('primer/new/', primer_views.PrimerCreateView.as_view(), name='primercreate'),
     # path('primer/', primer_views.index, name='primer'),
     # path('primerlist/', primer_views.PrimerListView.as_view(), name='primerlist'),
     # path('primerupload/', primer_views.PrimerUploadView.as_view(), name='primerupload'),
@@ -91,9 +90,6 @@ urlpatterns = [
     path('JC/', posts_views.index_JC, name='JC'),
 
     path('form/', include('index.urls')),
-    # path('polls/', poll_views.index, name='index'),
-    # path('poll/', poll_views.ChoiceCreateView.as_view(), name='create_poll'),
-    # path('form/<str:code>/edit/', poll_views.edit_form, name='edit_form'),
 
     path('form/', index_views.index, name="index"),
     # path('login', views.login_view, name="login"),

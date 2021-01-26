@@ -18,6 +18,9 @@
                     <div class="col-6">
                         {{ form.file }}
                     </div>
+                    <div class="col-6">
+                        {{ form.private|as_crispy_field }}
+                    </div>
                 </div>
                 {{ form.content|as_crispy_field }}
             </fieldset>

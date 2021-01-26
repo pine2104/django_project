@@ -9,9 +9,7 @@ from .filters import PostFilter, JCFilter
 from .forms import JCForm
 from django.urls import reverse_lazy, reverse
 
-
 from django.utils import timezone
-
 from django.urls import reverse_lazy
 
 # Create your views here.
@@ -38,7 +36,7 @@ def home(request):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'category', 'file', 'content']
+    fields = ['title', 'category', 'file', 'content', 'private']
     success_url = '/'
 
     def form_valid(self, form): # make authen to the user, over-write this fun.
@@ -70,7 +68,7 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'category', 'file', 'content']
+    fields = ['title', 'category', 'file', 'content', 'private']
 
     def form_valid(self, form): # make authen to the user, over-write this function.
         form.instance.author = self.request.user

@@ -20,6 +20,7 @@
     <div class="row">
         <h1 class="mb-0">Search Result</h1>
         {% for post in postFilter.qs %}
+        {% if not post.private %}
 
         <div class="col-lg-4">
             <div class="card mt-4" style="width: 20rem;height: 17rem;">
@@ -45,6 +46,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
         {% endfor %}
     </div>
 
