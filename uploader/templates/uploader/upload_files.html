@@ -1,20 +1,18 @@
-
-{% extends 'posts/base.html' %}
-
+{% extends "posts/base.html" %}
 {% load crispy_forms_tags %}
-
 {% block content %}
+    <h1>Upload Files</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.upload_file }}
+        <button type="submit" class="btn btn-primary">Upload Files</button>
+    </form>
 
 
 <div style="padding:40px;margin:40px;border:1px solid #ccc">
-    <h1>File Upload</h1>
-    <form method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{ form.upload_file }}
-      <input type="submit" value="upload" />
-    </form><hr>
-    <ul>
-    {% for document in documents %}
+
+<ul>
+    {% for document in all_files %}
         <li>
 
             <a href="{{ document.upload_file.url }}">{{ document.upload_file.name }}</a>
@@ -25,7 +23,6 @@
         </li>
     {% endfor %}
     </ul>
+
 </div>
 {% endblock content %}
-
-<!--<input type="submit" value="Delete">-->
