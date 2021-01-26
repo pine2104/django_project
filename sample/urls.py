@@ -20,15 +20,11 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 
-from homepage.views import homeview
 from uploader import views as uploader_views
 from primer import views as primer_views
 from posts import views as posts_views
-
 from users import views as user_views
 from index import views as index_views
-
-from pollform import views as poll_views
 
 
 

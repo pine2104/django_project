@@ -27,13 +27,6 @@ def index(request):
     return render(request, 'posts/index.html', context)
 
 
-
-def home(request):
-    context = {
-        'posts':Post.objects.all()[:5] #choose recent 5 posts
-    }
-    return render(request, 'homepage/homepage.html', context)
-
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['title', 'category', 'file', 'content', 'private']
@@ -43,11 +36,6 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-# class PostListView(ListView):
-#     model = Post
-#     template_name = 'homepage/homepage.html'
-#     context_object_name = 'posts'
-#     ordering = ['-date_posted']
 
 class PostDetailView(DetailView):
     model = Post
@@ -56,6 +44,7 @@ class PostDetailView(DetailView):
 #        context = super().get_context_data(**kwargs)
 #        context['now'] = timezone.now()
 #        return context
+
 
 class CategoryCreateView(LoginRequiredMixin, CreateView):
     model = Category

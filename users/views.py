@@ -8,9 +8,6 @@ from django.views.generic.detail import DetailView
 
 # Create your views here.
 
-# def register(request):
-#     form = UserCreationForm()
-#     return render(request, 'users/register.html', {'form': form})
 
 def register(request):
     if request.method == 'POST':

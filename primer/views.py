@@ -18,45 +18,23 @@ from .pcr import hamming_distance, match_primer, plotpcr
 
 
 
-
-# def index(request):
-#     primers = Primer.objects.all().order_by('-created_at')
-#     primerFilter = PrimerFilter(queryset=primers)
-#
-#     if request.method == 'POST':
-#         primerFilter = PrimerFilter(request.POST, queryset=primers)
-#
-#     context = {
-#         'primerFilter':primerFilter
-#     }
-#     return render(request, 'primer/primer_index_notuse.html', context)
-
-
-# class PrimerListView(ListView):
-#     model = Primer
-#     template_name = 'primer/primer_list_notuse.html'
-#     context_object_name = 'primers'
-#     ordering = ['-created_at']
-
-
 class PrimerFormView(FormView):
     template_name = 'primer/primer_form.html'
     form_class = PrimerForm
     # model = Primer
     success_url = reverse_lazy('primerlist')  # back to url name: fileupload (in urls)
 
-    # context = {'form': }
     def form_valid(self, form): # FormView does not save, you need to add
         form.instance.created_by = self.request.user
         form.save()
         return super(PrimerFormView, self).form_valid(form)
+
 
 class PrimerUploadView(CreateView):
     model = UploadPrimer
     template_name = 'primer/primerupload_form.html'
     fields = ['excel_file', ]
     success_url = reverse_lazy('homepage')  # back to url name: fileupload (in urls)
-
 
 
 class PrimerDetailView(DetailView):
@@ -86,16 +64,11 @@ class PrimerDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'primer/primer_confirm_delete.html'
     success_url = '/'
 
+
 class PrimerVectorUpdateView(LoginRequiredMixin, UpdateView):
     model = Primer
     fields = ['vector']
     template_name = 'primer/primervector_update.html'
-    # def get_success_url(self):
-    #     return reverse('seq')
-    # def form_valid(self, form): # make authen to the user, over-write this function.
-    #     form.instance.edit_at = datetime.datetime.now()
-    #     form.instance.edit_by = self.request.user
-    #     return super().form_valid(form)
 
 
 @login_required
@@ -116,8 +89,6 @@ def SelectVector(request):
         return redirect('seq')
 
     return render(request, template_name, context)
-
-
 
 
 def calpcr(request):
