@@ -1,27 +1,24 @@
 {% extends 'posts/base.html' %}
+<!--{% block content %}-->
+<!--<form method='POST'>-->
+<!--    {% csrf_token %}-->
+<!--    Title: {{ postFilter.form.title }}-->
+<!--    Content: {{ postFilter.form.content }}-->
+<!--    Category: {{ postFilter.form.category }}-->
+<!--    Author: {{ postFilter.form.author }}-->
+<!--    Date: {{ postFilter.form.date_posted }}-->
+<!--    <input type="submit" class="btn btn-primary" value="Search" />-->
+<!--</form>-->
 
 
-
-    {% block content %}
-    <form method='POST'>
-        {% csrf_token %}
-        Title: {{ postFilter.form.title }}
-        Content: {{ postFilter.form.content }}
-        Category: {{ postFilter.form.category }}
-        Author: {{ postFilter.form.author }}
-        Date: {{ postFilter.form.date_posted }}
-        <input type="submit" class="btn btn-primary" value="Search" />
-    </form>
-
-
-    <h1>Search Result</h1>
 
 <div class="row">
-    <div class="col-3">
-        {% for post in postFilter.qs %}
-        {% if not post.private %}
-        <div class="card mt-3" style="width: 20rem;height: 17rem;">
-            <div class="card-header" style="width: 20rem;height: 7rem;">
+
+    {% for post in postFilter.qs %}
+    {% if not post.private %}
+    <div class="col-3" style="margin-right: 5vmax;">
+        <div class="card mt-3" style="width:18vmax; height:40vmin;">
+            <div class="card-header" style="width:18vmax; height:20vmin;">
                 <div class="row">
                     <div class="col-3">
                         <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
@@ -42,10 +39,11 @@
                 <div class="mb-1 text-muted">{{ post.date_posted|date:"Y, M, d" }} by {{ post.author }}</div>
             </div>
         </div>
-        {% endif %}
-        {% endfor %}
+
     </div>
+    {% endif %}
+    {% endfor %}
 </div>
 
+{% endblock %}
 
-    {% endblock %}

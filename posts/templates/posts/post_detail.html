@@ -1,13 +1,9 @@
-
-
 {% extends 'posts/base.html' %}
+
 {% block content %}
 
-   <style>
 
-    </style>
-
-<div style="margin:50px 0px 100px 0px;">
+<div>
     <article class="media content-section">
     <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
     <div class="media-body">
@@ -24,13 +20,10 @@
         {% if object.file %}
         <a href="{{ object.file.url }}">download</a>
         {% endif %}
-
         <p class="article-content-d">{{ object.content }}</p>
     </div>
   </article>
 </div>
-
-
 
 {% endblock content %}
 

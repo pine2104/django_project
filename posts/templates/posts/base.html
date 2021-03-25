@@ -48,33 +48,21 @@
 </head>
 
   <body>
-  <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white">
-      <div>
-          <div class="row row-cols-auto">
-              <div class="col-1" id="posts" style="margin-top: 2vh;margin-left: 2vw;">
-                  <b-button v-b-toggle.sidebar-backdrop variant="outline-dark">☰</b-button>
-                    <b-sidebar
-                      id="sidebar-backdrop"
-                      title="Sidebar with backdrop"
-                      :backdrop-variant="variant"
-                      backdrop
-                      shadow
-                    >
-                    </b-sidebar>
-              </div>
 
+  <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
 
-              <div class="col-1 lab-img" style="margin-left: -2vw; padding-left: -0vw;">
-                  <a href="{% url 'homepage' %}"><img class="lab-img" src="../media/lab_icon.png"></a>
-              </div>
+      <div class="container" style="padding-left=-10vw;">
+<!--          <div class="row">-->
+          <div class="col-1" id="posts" style="margin-top: 2vmin;margin-left: 0vw;">
+              <b-button v-b-toggle.sidebar-backdrop variant="outline-dark">☰</b-button>
+                <b-sidebar
+                  id="sidebar-backdrop"
+                  title="Sidebar with backdrop"
+                  :backdrop-variant="variant"
+                  backdrop
+                  shadow>
+                    <ul class="nav flex-column">
 
-              <div class="col-2" style="margin-left: 3vw; margin-top: -2vh;">
-                  <a href="https://www.ntu.edu.tw/"><img class="ntu-img" src="../media/ntu2.png"></a>
-              </div>
-
-
-              <div class="col-7" style="margin-left: 4vw; margin-top: 1vh;">
-                  <ul class="navbar-nav me-auto mb-lg-0">
                       <li class="nav-item dropdown">
                           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                               Primer
@@ -137,11 +125,49 @@
                               <li><a class="dropdown-item" href="https://sites.google.com/site/hwlilab/">Lab's Website</a></li>
                           </ul>
                       </li>
-                  </ul>
-              </div>
+
+              </ul>
+
+
+
+                </b-sidebar>
           </div>
-      </div>
+          <div class="col-4" style="margin-left: 0vmin; padding-left: -0vw;">
+              <a class="navbar-brand" href="{% url 'homepage' %}"><img class="ntu-img" src="{% static 'ntu_lab.png' %}"></a>
+          </div>
+          <div class="col-4">
+              <form method='POST'>
+                  {% csrf_token %}
+                  {{ postFilter.form.category }}
+<!--                  <input type="submit" class="btn btn-primary" value="Search" />-->
+                  <button type="submit"><img class="search-img" src="{% static 'search.svg' %}"></button>
+              </form>
+          </div>
+
+
+          <div class="col-1 align-self-end" style="margin-top: 2vmin; margin-left: 0vmin;">
+              <dd class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      {% if user.is_authenticated %}
+                      <img class="rounded-circle article-img" src="{{ user.profile.image.url }}">
+                  </a>
+                      <dl class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <dd><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></dd>
+                          <dd><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></dd>
+                      </dl>
+                      {% else %}
+                      <img class="rounded-circle article-img" src="{% static 'blank.jpg' %}">
+                  </a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+                      </ul>
+                      {% endif %}
+              </dd>
+          </div>
+<!--          </div>-->
+    </div>
   </nav>
+
 
 
 
@@ -172,18 +198,30 @@
   </div>
 
 
+<footer class="footer fixed-bottom">
+  <div class="container" style="background-color: #f5f5f5;">
+      <div class="col" style="text-align:center;">
+<!--          <span>-->
+              <dd>
+
+                  <dl>
+                      <a href="/admin"><img class="rounded-circle admin-img" src="{% static 'admin.webp' %}"></a>
+                      <a href="https://github.com/pine2104/django_project"><img class="rounded-circle footer-img" src="{% static 'github.jpg' %}"></a>
+                      Licensed <a href="https://github.com/pine2104/django_project/blob/develop/LICENSE">MIT</a></dl>
+              </dd>
+<!--          </span>-->
+      </div>
+
+  </div>
+</footer>
 
 
 
 
 
-    <div id="copyright">
-    <div class="container">
-      <div class="row-fluid">
-        <div class="row-fluid">
-          <div class="copyright-text copyright-left">
-                        &copy; xxxxxxxxxxxxxxxx | <a href="/admin">admin login</a>                      </div>
-          <div class="textright copyright-right">
+
+
+
 
 <!--		  <style>-->
 <!--		    .credits {-->
@@ -208,9 +246,7 @@
 <!--		    }-->
 <!--      </style>-->
 
-      <div class="credits">
-          xxxxxxxxxxxxxxxxxx
-      </div>
+
 
             <!-- Top Bar Social Icons END -->
           </div>
