@@ -1,6 +1,31 @@
 /* stylelint-disable selector-list-comma-newline-after */
 
 
+/* stylelint-disable selector-list-comma-newline-after */
+.sidebar-text {
+    font-family: 'Titillium Web', sans-serif !important;
+    padding-bottom: 1.0vmin;
+    padding-left: 10vmin;
+    font-size: 3.0vmin
+}
+
+.ntu-img {
+  height: 12.0vh;
+  width: 15.0vw;
+}
+
+.lab-img {
+  height: 7.5vh;
+  width: 10.0vw;
+}
+
+
+a{
+  font-family: 'Titillium Web', sans-serif !important;
+}
+
+
+
 
 .blog-header {
   line-height: 1;
@@ -18,7 +43,7 @@
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: Palatino Linotype;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .display-4 {
@@ -153,3 +178,4 @@ a.article-title:hover {
   height: 25px;
   vertical-align: middle;
 }
+

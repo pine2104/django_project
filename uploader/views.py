@@ -17,12 +17,12 @@ class UploadView(CreateView):
         context = super().get_context_data(**kwargs)
         context['documents'] = Upload.objects.all()
         return context
-    def form_valid(self, form):
-        obj = form.save(commit=False)
-        if self.request.FILES:
-            for f in self.request.FILES.getlist('file'):
-                obj = self.model.objects.create(file=f)
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     obj = form.save(commit=False)
+    #     if self.request.FILES:
+    #         for f in self.request.FILES.getlist('file'):
+    #             obj = self.model.objects.create(file=f)
+    #     return super().form_valid(form)
 
 
 

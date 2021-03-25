@@ -41,7 +41,7 @@ class Primer(models.Model):
     place = models.CharField(max_length=50, blank=True, default='Project box')
     price = models.CharField(max_length=50, blank=True)
     volumn = models.CharField(max_length=50, blank=True) # conc. in 100 uM
-    brand = models.CharField(max_length=50, blank=True) # which inc. produced
+    vendor = models.CharField(max_length=50, blank=True) # which inc. produced
     created_at = models.DateTimeField(auto_now_add=True)
     edit_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_by', default=1)

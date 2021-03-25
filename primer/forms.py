@@ -4,7 +4,7 @@ from .models import Primer
 class PrimerForm(forms.ModelForm):
     class Meta:
         model = Primer
-        fields = ['name', 'project','sequence', 'length', 'modification_5', 'modification_3', 'modification_internal', 'vector', 'who_ordered', 'purpose', 'price', 'volumn', 'brand']
+        fields = ['name', 'project','sequence', 'length', 'modification_5', 'modification_3', 'modification_internal', 'vector', 'who_ordered', 'purpose', 'price', 'volumn', 'vendor']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'ex: p123'}),
             'sequence': forms.TextInput(attrs={'class': 'form-control',
@@ -16,7 +16,7 @@ class PrimerForm(forms.ModelForm):
             'purpose': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'ex: pcr 500 bp DNA for TPM'}),
             'price': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'ex: 1000'}),
             'volumn': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'ex: 100'}),
-            'brand': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'ex: IDT or MDBio'}),
+            'vendor': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'ex: IDT or MDBio'}),
         }
         labels = {
             'name': 'Primer name',
@@ -29,7 +29,7 @@ class PrimerForm(forms.ModelForm):
             'purpose': 'Purpose',
             'price': 'Price (NT$)',
             'volumn': 'Volumn (uL, in 100 uM)',
-            'brand': 'Produce Inc.',
+            'vendor': 'Produce Inc.',
         }
 
 
