@@ -51,10 +51,13 @@ urlpatterns = [
 
     path('post/<int:pk>/', posts_views.PostDetailView.as_view(), name='postdetail'),
     path('post/new/', posts_views.PostCreateView.as_view(), name='postcreate'),
-    path('category/new/', posts_views.CategoryCreateView.as_view(), name='categorycreate'),
+    path('category/', posts_views.show_category, name='category'),
+    path('category/new/', posts_views.CategoryCreateView.as_view(), name='category_create'),
+    path('category/<int:pk>/delete/', posts_views.CateDeleteView.as_view(), name='category_delete'),
+    path('category/<int:pk>/', posts_views.CateDetailView.as_view(), name='category_detail'),
+
     path('post/<int:pk>/update/', posts_views.PostUpdateView.as_view(), name='postupdate'),
     path('post/<int:pk>/delete/', posts_views.PostDeleteView.as_view(), name='postdelete'),
-    # path('search/', posts_views.index, name='search'),
 
     # path('fileupload/', uploader_views.UploadView.as_view(), name='fileupload'), #its name is 'fileupload'
     path('fileupload/', uploader_views.upload_file, name='fileupload'),

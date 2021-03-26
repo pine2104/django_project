@@ -31,7 +31,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['title', 'category', 'file', 'content', 'private']
     success_url = '/'
-
+    template_name = 'posts/post_form.html'
     def form_valid(self, form): # make authen to the user, over-write this fun.
         form.instance.author = self.request.user
         return super().form_valid(form)
@@ -50,10 +50,26 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
     model = Category
     fields = ['name']
     success_url = '/'
-
     def form_valid(self, form): # make authen to the user, over-write this fun.
         return super().form_valid(form)
 
+class CateDetailView(DetailView):
+    model = Category
+
+class CateDeleteView(LoginRequiredMixin, DeleteView):
+    model = Category
+    success_url = '/'
+    template_name = 'posts/category_confirm_delete.html'
+
+    # def get_success_url(self):
+    #     return reverse('category_detail')
+
+def show_category(request):
+    categories = Category.objects.all()
+    context = {
+        'categories':categories
+    }
+    return render(request, 'posts/category_index.html', context)
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
@@ -71,7 +87,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
-    # template_name = 'posts/post_detail.html'
+    template_name = 'posts/post_detail.html'
     success_url = '/'
 
     def test_func(self):

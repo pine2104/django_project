@@ -1,0 +1,17 @@
+
+{% extends 'posts/base.html' %}
+
+{% block content %}
+{% for category in categories %}
+<div class="row">
+        <div class="col-4">
+            <a class="article-content" href="{% url 'category_detail' category.pk %}">{{ category.name }}</a>
+        </div>
+        <div class="col">
+            <a style="color:#ff0000 ;" href="{% url 'category_delete' category.pk %}">delete</a>
+        </div>
+
+</div>
+{% endfor %}
+
+{% endblock %}

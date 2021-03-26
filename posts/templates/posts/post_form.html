@@ -12,9 +12,19 @@
                     <div class="col-6">
                         {{ form.title|as_crispy_field }}
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
                         {{ form.category|as_crispy_field }}
                     </div>
+                    <div class="col-1" style="margin-top: 1.5vmin;">
+                        <a href="{% url 'category_create' %}">add category</a>
+                    </div>
+                    <div class="col-1" style="margin-top: 1.5vmin;">
+                        <a style="color: #ff0000;" href="{% url 'category' %}">delete category</a>
+                    </div>
+
+
+
+
                     <div class="col-6">
                         {{ form.file }}
                     </div>
