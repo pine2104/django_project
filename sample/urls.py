@@ -56,8 +56,8 @@ urlpatterns = [
     path('post/<int:pk>/delete/', posts_views.PostDeleteView.as_view(), name='postdelete'),
     # path('search/', posts_views.index, name='search'),
 
-    path('fileupload/', uploader_views.UploadView.as_view(), name='fileupload'), #its name is 'fileupload'
-    path('fileupload2/', uploader_views.upload_file, name='fileupload2'),
+    # path('fileupload/', uploader_views.UploadView.as_view(), name='fileupload'), #its name is 'fileupload'
+    path('fileupload/', uploader_views.upload_file, name='fileupload'),
 
     path('delete/<int:pk>/', uploader_views.FileDeleteView.as_view(), name='delete'),
     path('primerinput/', login_required(primer_views.PrimerFormView.as_view()), name='primerinput'),

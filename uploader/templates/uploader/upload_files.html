@@ -1,15 +1,18 @@
 {% extends "posts/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <h1>Upload Files</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.upload_file }}
-        <button type="submit" class="btn btn-primary">Upload Files</button>
-    </form>
+<h1 class="jc-title" style="font-size: 5.0vmin;">Upload Files </h1>
+<h1 class="article-header">
+    Use for directly transmitting data or files. Please delete it to save storage after finishing work.
+</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.upload_file }}
+    <button type="submit" class="btn btn-primary">Upload Files</button>
+</form>
 
 
-<div style="padding:40px;margin:40px;border:1px solid #ccc">
+<div class="containter">
 
 <ul>
     {% for document in all_files %}

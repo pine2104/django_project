@@ -1,7 +1,8 @@
 from django.shortcuts import render
 
 # Create your views here.
-# from django.views.generic.edit import CreateView, DeleteView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import CreateView, DeleteView
 from django.urls import reverse_lazy
 from .models import Upload
@@ -25,7 +26,7 @@ class UploadView(CreateView):
     #     return super().form_valid(form)
 
 
-
+@login_required
 def upload_file(request):
     all_files = Upload.objects.all()
     if request.method == 'POST':
@@ -42,7 +43,7 @@ def upload_file(request):
 
 
 
-class FileDeleteView(DeleteView):
+class FileDeleteView(LoginRequiredMixin, DeleteView):
     model = Upload
     success_url = reverse_lazy('fileupload')
 

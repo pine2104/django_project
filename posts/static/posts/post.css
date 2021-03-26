@@ -3,20 +3,13 @@
 /* for articles setting */
 .article-title {
   color: #000000;
-  font-family: 'Chango', cursive, 'Josefin Sans', 'Noto Sans TC',sans-serif;
+  font-family: 'PT Mono', monospace, 'Chango', cursive, 'Josefin Sans', 'Noto Sans TC',sans-serif;
   padding-bottom: 0.0vmin;
   padding-left: 0vmin;
   font-size: 5.0vmin
 }
 
 
-.article-title-s {
-  color: #000000;
-  font-family: 'Josefin Sans', sans-serif;
-  padding-bottom: 0.0vmin;
-  padding-left: 0vmin;
-  font-size: 3.0vmin
-}
 
 .article-header {
   color: #9c9796;
@@ -40,7 +33,7 @@ a.article-title:hover {
 
 .article-content {
   color: #000000;
-  font-family: 'Josefin Sans', sans-serif, 'Chango', cursive;
+  font-family: 'PT Mono', monospace, 'Josefin Sans', sans-serif, 'Chango', cursive;
   margin-top: 0.0vmin;
   font-size: 3.0vmin
 
@@ -67,6 +60,18 @@ a.article-title:hover {
   margin-bottom: 0px;
 }
 
+.jc-title{
+  color: #000000;
+  font-family: 'Arial', sans-serif;
+  margin-top: 0.0vmin;
+  font-size: 4.0vmin
+}
+.jc-content{
+  color: #000000;
+  font-family: 'Arial', sans-serif;
+  margin-top: 0.0vmin;
+  font-size: 3.0vmin
+}
 
 
 

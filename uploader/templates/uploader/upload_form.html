@@ -1,13 +1,11 @@
 
 {% extends 'posts/base.html' %}
-
 {% load crispy_forms_tags %}
-
 {% block content %}
 
 
 <div style="padding:40px;margin:40px;border:1px solid #ccc">
-    <h1>File Upload</h1>
+    <h1 class="article-title">File Upload</h1>
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       {{ form.upload_file }}

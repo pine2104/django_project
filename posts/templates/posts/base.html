@@ -2,11 +2,7 @@
 {% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
-
-
 <head>
-
-
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,19 +28,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Chango&family=Josefin+Sans:wght@700&family=Noto+Sans+TC:wght@700&display=swap" rel="stylesheet">
 
-
+<!--    PT Mono for post title and content-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Chango&family=Josefin+Sans:wght@700&family=Noto+Sans+TC:wght@700&family=PT+Mono&display=swap" rel="stylesheet">
 
     <script>
 
-
-     </script>
+    </script>
 
 
     <style>
     body {
       background:#f9f9f9;
     }
-
 
     button {
         font-family: 'Titillium Web', sans-serif !important;
@@ -54,12 +50,12 @@
       text-align:center;
     }
 
-
     </style>
-
 </head>
 
-  <body>
+
+
+<body>
   <nav class="navbar sticky-top navbar-expand navbar-light bg-white" style="height: 15vmin;">
       <div class="container" style="padding-left=-10vw; margin-top: -0vmin; margin-left: -0vmin;">
           <div class="col-1" id="posts" style="margin-top: 0vmin;margin-left: 0vw;">
@@ -82,14 +78,20 @@
 
                     <ul class="nav flex-column">
 
-                        <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#demo1">Primer</button>
+                        <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#demo1">
+                            <img class="rounded-circle article-img" src="{% static 'DNA.png' %}">
+                            Primer
+                        </button>
                         <div id="demo1" class="collapse">
                             <li><a class="dropdown-item" href="{% url 'primerinput' %}">Primer Input</a></li>
                             <li><a class="dropdown-item" href="{% url 'primer' %}">Primer List</a></li>
                             <li><a class="dropdown-item" href="{% url 'seqvector' %}">Seq. Extract</a></li>
                         </div>
 
-                        <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#demo2">Protocols</button>
+                        <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#demo2">
+                            <img class="rounded-circle article-img" src="{% static 'protocols.jpg' %}">
+                            Protocols
+                        </button>
                         <div id="demo2" class="collapse">
                             <li><a class="dropdown-item" href="{% url 'protocols_TPM' %}">TPM</a></li>
                             <li><a class="dropdown-item" href="{% url 'protocols_FRET' %}">FRET</a></li>
@@ -97,19 +99,28 @@
                             <li><a class="dropdown-item" href="{% url 'protocols_OT' %}">OT</a></li>
                         </div>
 
-                        <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#demo3">Journal Club</button>
+                        <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#demo3">
+                            <img class="rounded-circle article-img" src="{% static 'journal.jpeg' %}">
+                            Journal Club
+                        </button>
                         <div id="demo3" class="collapse">
                             <li><a class="dropdown-item" href="{% url 'JCcreate' %}">Create</a></li>
                             <li><a class="dropdown-item" href="{% url 'JC' %}">View</a></li>
                         </div>
 
-                        <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#demo4">Lab Common</button>
+                        <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#demo4">
+                            <img class="rounded-circle article-img" src="{% static 'form.png' %}">
+                            Lab Common
+                        </button>
                         <div id="demo4" class="collapse">
-<!--                            <li><a class="dropdown-item" href="#">Lab Schedule</a></li>-->
+                            <li><a class="dropdown-item" href="{% url 'fileupload' %}">Upload files</a></li>
                             <li><a class="dropdown-item" href="{% url 'index' %}">Forms</a></li>
                         </div>
 
-                        <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#demo5">Other Links</button>
+                        <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#demo5">
+                            <img class="rounded-circle article-img" src="{% static 'links.png' %}">
+                            Other Links
+                        </button>
                         <div id="demo5" class="collapse">
                             <li><a class="dropdown-item" href="https://teamleogo1017.slack.com/">Slack</a></li>
                             <li><a class="dropdown-item" href="https://drive.google.com/drive/u/1/my-drive">Google Drive</a></li>
@@ -118,14 +129,14 @@
                             <li><a class="dropdown-item" href="https://sites.google.com/site/hwlilab/">Lab's Website</a></li>
                         </div>
 
-                        <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#demo6">Source code</button>
+                        <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#demo6">
+                            <img class="rounded-circle article-img" src="{% static 'github.png' %}">
+                            Source code
+                        </button>
                         <div id="demo6" class="collapse">
                             <li><a class="dropdown-item" href="https://github.com/hwligroup">Github</a></li>
                         </div>
-
-
                     </ul>
-
                 </b-sidebar>
           </div>
           <div class="col-7" style="margin-left: -5.0vmin; padding-left: -0vmin;">
@@ -154,7 +165,7 @@
       </div>
   </nav>
 
-
+  <hr>
 
   <div>
       <div class="row">
@@ -264,5 +275,5 @@
     -->
 
 
-  </body>
+</body>
 </html>
