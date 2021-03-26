@@ -1,49 +1,68 @@
 {% extends 'posts/base.html' %}
-<!--{% block content %}-->
-<!--<form method='POST'>-->
-<!--    {% csrf_token %}-->
-<!--    Title: {{ postFilter.form.title }}-->
-<!--    Content: {{ postFilter.form.content }}-->
-<!--    Category: {{ postFilter.form.category }}-->
-<!--    Author: {{ postFilter.form.author }}-->
-<!--    Date: {{ postFilter.form.date_posted }}-->
-<!--    <input type="submit" class="btn btn-primary" value="Search" />-->
-<!--</form>-->
+{% block content %}
 
 
-
-<div class="row">
 
     {% for post in postFilter.qs %}
     {% if not post.private %}
-    <div class="col-3" style="margin-right: 5vmax;">
-        <div class="card mt-3" style="width:18vmax; height:40vmin;">
-            <div class="card-header" style="width:18vmax; height:20vmin;">
-                <div class="row">
-                    <div class="col-3">
-                        <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
-                    </div>
-                    <div class="col-8">
-                        <h6><strong class="d-inline-block mb-12 text-primary">{{ post.category }}</strong></h6>
-                    </div>
-                    <div class="col-12">
-                        <h4 class="mb-0" align=justify>{{ post.title }}</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body" style="width: 20rem;height: 7rem;">
-              <p>{{ post.content|slice:"0:20" }}...</p>
-              <a href="{% url 'postdetail' post.pk %}" class="stretched-link">more</a>
-            </div>
-            <div class="card-footer">
-                <div class="mb-1 text-muted">{{ post.date_posted|date:"Y, M, d" }} by {{ post.author }}</div>
-            </div>
-        </div>
+<div>
 
+    <div class="row">
+        <div class="col-1">
+            <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+        </div>
+        <div class="col-2">
+            <p class="article-header">{{ post.date_posted|date:"M d" }} by {{ post.author }}</p>
+        </div>
     </div>
+    <div class="row">
+        <div class="col col-lg-1"><h1 class="article-category">{{ post.category }}</h1> </div>
+        <div class="col-md-auto article-title">{{ post.title }}</div>
+    </div>
+    <div class="row">
+        <h1 class="article-content">{{ post.content|linebreaks|slice:"0:500" }}...</h1>
+        <a href="{% url 'postdetail' post.pk %}" class="stretched-link" style="color: #00a521;text-decoration:none;">Read more</a>
+    </div>
+    <hr>
+    <div class="article-sep">
+    </div>
+
+</div>
     {% endif %}
     {% endfor %}
-</div>
 
 {% endblock %}
+
+
+
+
+
+<!--    <div class="col-3" style="margin-right: 5vmax;">-->
+<!--        <div class="card mt-3" style="width:18vmax; height:40vmin;">-->
+<!--            <div class="card-header" style="width:18vmax; height:20vmin;">-->
+<!--                <div class="row">-->
+<!--                    <div class="col-3">-->
+<!--                        <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">-->
+<!--                    </div>-->
+<!--                    <div class="col-8">-->
+<!--                        <h6><strong class="d-inline-block mb-12 text-primary">{{ post.category }}</strong></h6>-->
+<!--                    </div>-->
+<!--                    <div class="col-12">-->
+<!--                        <p class="article-title" align=justify>{{ post.title }}</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="card-body" style="width: 20rem;height: 7rem;">-->
+<!--              <p>{{ post.content|slice:"0:20" }}...</p>-->
+<!--              <a href="{% url 'postdetail' post.pk %}" class="stretched-link">more</a>-->
+<!--            </div>-->
+<!--            <div class="card-footer">-->
+<!--                <div class="mb-1 text-muted">{{ post.date_posted|date:"Y, M, d" }} by {{ post.author }}</div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--</div>-->
+
+
 

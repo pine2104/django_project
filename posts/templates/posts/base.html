@@ -1,4 +1,5 @@
 {% load static %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,164 +12,147 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-<!--      for sidebar arrow-->
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">-->
-<!--    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>-->
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">-->
     <link rel="stylesheet" type="text/css" href="{% static 'posts/post.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
-<!--    &lt;!&ndash; Style CSS &ndash;&gt;-->
-<!--      <link rel="stylesheet" href="css/style.css">-->
-<!--	&lt;!&ndash; Demo CSS &ndash;&gt;-->
-<!--	<link rel="stylesheet" href="css/demo.css">-->
-
-
     <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
-
 <!--    primer table-->
     <link rel="stylesheet" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}" />
 <!--      font-family-->
-
+<!--    'Titillium Web', sans-serif-->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@600&display=swap" rel="stylesheet">
+<!--    'Josefin Sans', sans-serif;-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap" rel="stylesheet">
+<!--    Noto Sans TC for Chinese-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&family=Noto+Sans+TC:wght@700&display=swap" rel="stylesheet">
+<!--    Chango for post title-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Chango&family=Josefin+Sans:wght@700&family=Noto+Sans+TC:wght@700&display=swap" rel="stylesheet">
+
+
 
     <script>
-
-
 
 
      </script>
 
 
     <style>
+    body {
+      background:#f9f9f9;
+    }
+
+
+    button {
+        font-family: 'Titillium Web', sans-serif !important;
+        font-size: 3.0vmin !important;
+    }
+    li {
+      text-align:center;
+    }
+
 
     </style>
 
 </head>
 
   <body>
-
-  <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-
-      <div class="container" style="padding-left=-10vw;">
-<!--          <div class="row">-->
-          <div class="col-1" id="posts" style="margin-top: 2vmin;margin-left: 0vw;">
-              <b-button v-b-toggle.sidebar-backdrop variant="outline-dark">☰</b-button>
+  <nav class="navbar sticky-top navbar-expand navbar-light bg-white" style="height: 15vmin;">
+      <div class="container" style="padding-left=-10vw; margin-top: -0vmin; margin-left: -0vmin;">
+          <div class="col-1" id="posts" style="margin-top: 0vmin;margin-left: 0vw;">
+              <b-button v-b-toggle.sidebar-backdrop variant="light">☰</b-button>
                 <b-sidebar
                   id="sidebar-backdrop"
                   title="Sidebar with backdrop"
                   :backdrop-variant="variant"
+                  no-header
                   backdrop
                   shadow>
+<!--                    search bar-->
+                    <div class="container">
+                        <form method='POST' style="margin-top: 5.5vmin;">
+                        {% csrf_token %}
+                        {{ postFilter.form.title }}
+                        <button class="btn btn-outline-light" style="margin-top: -9.5vmin; margin-left: 37.5vmin;" type="submit"><img class="search-img" src="{% static 'search.svg' %}"></button>
+                        </form>
+                    </div>
+
                     <ul class="nav flex-column">
 
-                      <li class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              Primer
-                          </a>
+                        <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#demo1">Primer</button>
+                        <div id="demo1" class="collapse">
+                            <li><a class="dropdown-item" href="{% url 'primerinput' %}">Primer Input</a></li>
+                            <li><a class="dropdown-item" href="{% url 'primer' %}">Primer List</a></li>
+                            <li><a class="dropdown-item" href="{% url 'seqvector' %}">Seq. Extract</a></li>
+                        </div>
 
-                          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                              <li><a class="dropdown-item" href="{% url 'primerinput' %}">Primer Input</a></li>
-                              <li><a class="dropdown-item" href="{% url 'primer' %}">Primer List</a></li>
-                              <li><a class="dropdown-item" href="{% url 'seqvector' %}">Seq. Extract</a></li>
-                          </ul>
-                      </li>
+                        <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#demo2">Protocols</button>
+                        <div id="demo2" class="collapse">
+                            <li><a class="dropdown-item" href="{% url 'protocols_TPM' %}">TPM</a></li>
+                            <li><a class="dropdown-item" href="{% url 'protocols_FRET' %}">FRET</a></li>
+                            <li><a class="dropdown-item" href="{% url 'protocols_CoSMoS' %}">CoSMoS</a></li>
+                            <li><a class="dropdown-item" href="{% url 'protocols_OT' %}">OT</a></li>
+                        </div>
 
-                      <li class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              Protocols
-                          </a>
-                          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#demo3">Journal Club</button>
+                        <div id="demo3" class="collapse">
+                            <li><a class="dropdown-item" href="{% url 'JCcreate' %}">Create</a></li>
+                            <li><a class="dropdown-item" href="{% url 'JC' %}">View</a></li>
+                        </div>
 
-                              <li><a class="dropdown-item" href="{% url 'protocols_TPM' %}">TPM</a></li>
-                              <li><a class="dropdown-item" href="{% url 'protocols_FRET' %}">FRET</a></li>
-                              <li><a class="dropdown-item" href="{% url 'protocols_CoSMoS' %}">CoSMoS</a></li>
-                              <li><a class="dropdown-item" href="{% url 'protocols_OT' %}">OT</a></li>
-                          </ul>
-                      </li>
-                      <li class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              Source code
-                          </a>
-                          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                              <li><a class="dropdown-item" href="https://github.com/hwligroup">Github</a></li>
-                          </ul>
-                      </li>
-                      <li class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              Journal Club
-                          </a>
-                          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                              <li><a class="dropdown-item" href="{% url 'JCcreate' %}">Create</a></li>
-                              <li><a class="dropdown-item" href="{% url 'JC' %}">View</a></li>
-                          </ul>
-                      </li>
-                      <li class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              Lab Common
-                          </a>
-                          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                              <li><a class="dropdown-item" href="#">Lab Schedule</a></li>
-                              <li><a class="dropdown-item" href="{% url 'index' %}">Forms</a></li>
-                          </ul>
-                      </li>
-                      <li class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              Other Links
-                          </a>
-                          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                              <li><a class="dropdown-item" href="https://teamleogo1017.slack.com/">Slack</a></li>
-                              <li><a class="dropdown-item" href="https://drive.google.com/drive/u/1/my-drive">Google Drive</a></li>
-                              <li><a class="dropdown-item" href="https://calendar.google.com/calendar/u/1/r?pli=1">Google Calendar</a></li>
-                              <li><a class="dropdown-item" href="https://www.dropbox.com/home">Dropbox</a></li>
-                              <li><a class="dropdown-item" href="https://sites.google.com/site/hwlilab/">Lab's Website</a></li>
-                          </ul>
-                      </li>
+                        <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#demo4">Lab Common</button>
+                        <div id="demo4" class="collapse">
+<!--                            <li><a class="dropdown-item" href="#">Lab Schedule</a></li>-->
+                            <li><a class="dropdown-item" href="{% url 'index' %}">Forms</a></li>
+                        </div>
 
-              </ul>
+                        <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#demo5">Other Links</button>
+                        <div id="demo5" class="collapse">
+                            <li><a class="dropdown-item" href="https://teamleogo1017.slack.com/">Slack</a></li>
+                            <li><a class="dropdown-item" href="https://drive.google.com/drive/u/1/my-drive">Google Drive</a></li>
+                            <li><a class="dropdown-item" href="https://calendar.google.com/calendar/u/1/r?pli=1">Google Calendar</a></li>
+                            <li><a class="dropdown-item" href="https://www.dropbox.com/home">Dropbox</a></li>
+                            <li><a class="dropdown-item" href="https://sites.google.com/site/hwlilab/">Lab's Website</a></li>
+                        </div>
+
+                        <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#demo6">Source code</button>
+                        <div id="demo6" class="collapse">
+                            <li><a class="dropdown-item" href="https://github.com/hwligroup">Github</a></li>
+                        </div>
 
 
+                    </ul>
 
                 </b-sidebar>
           </div>
-          <div class="col-4" style="margin-left: 0vmin; padding-left: -0vw;">
-              <a class="navbar-brand" href="{% url 'homepage' %}"><img class="ntu-img" src="{% static 'ntu_lab.png' %}"></a>
+          <div class="col-7" style="margin-left: -5.0vmin; padding-left: -0vmin;">
+              <a href="{% url 'homepage' %}"><img class="ntu-img" src="{% static 'lab_icon2.png' %}"></a>
           </div>
-          <div class="col-4">
-              <form method='POST'>
-                  {% csrf_token %}
-                  {{ postFilter.form.category }}
-<!--                  <input type="submit" class="btn btn-primary" value="Search" />-->
-                  <button type="submit"><img class="search-img" src="{% static 'search.svg' %}"></button>
-              </form>
-          </div>
-
-
-          <div class="col-1 align-self-end" style="margin-top: 2vmin; margin-left: 0vmin;">
+          <div class="col-1 align-self-end" style="margin-top: -5vmin; margin-left: 0vmin;">
               <dd class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       {% if user.is_authenticated %}
-                      <img class="rounded-circle article-img" src="{{ user.profile.image.url }}">
+                      <img class="rounded-circle article-img" style="margin-top: -5vmin;" src="{{ user.profile.image.url }}">
                   </a>
                       <dl class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <dd><a class="dropdown-item" href="{% url 'postcreate' %}">Create</a></dd>
+
                           <dd><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></dd>
                           <dd><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></dd>
                       </dl>
                       {% else %}
-                      <img class="rounded-circle article-img" src="{% static 'blank.jpg' %}">
-                  </a>
+                      <img class="rounded-circle article-img" style="margin-top: -5vmin;" src="{% static 'blank.jpg' %}"></a>
                       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                           <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
                       </ul>
                       {% endif %}
               </dd>
           </div>
-<!--          </div>-->
-    </div>
+      </div>
   </nav>
-
-
 
 
 
@@ -192,74 +176,27 @@
 <!--          blank-->
           <div class="col-1">
           </div>
-
       </div>
-
   </div>
 
 
-<footer class="footer fixed-bottom">
-  <div class="container" style="background-color: #f5f5f5;">
+
+<footer class="bd-footer p-3 p-md-5 mt-5 bg-light text-center text-sm-start">
+  <div class="container">
       <div class="col" style="text-align:center;">
-<!--          <span>-->
-              <dd>
-
-                  <dl>
-                      <a href="/admin"><img class="rounded-circle admin-img" src="{% static 'admin.webp' %}"></a>
-                      <a href="https://github.com/pine2104/django_project"><img class="rounded-circle footer-img" src="{% static 'github.jpg' %}"></a>
-                      Licensed <a href="https://github.com/pine2104/django_project/blob/develop/LICENSE">MIT</a></dl>
-              </dd>
-<!--          </span>-->
+          <dd>
+              <dl>
+                  <a href="/admin"><img class="rounded-circle footer-img" src="{% static 'admin.webp' %}"></a>
+                  <a href="https://github.com/pine2104/django_project"><img class="rounded-circle footer-img" src="{% static 'github.png' %}"></a>
+                  <p>Code licensed <a href="https://github.com/pine2104/django_project/blob/develop/LICENSE">MIT</a></p>
+                  <h1 class="footer-text">Hung-Wen Li's Lab, Department of Chemistry at National Taiwan University</h1>
+              </dl>
+          </dd>
       </div>
-
   </div>
 </footer>
 
 
-
-
-
-
-
-
-
-<!--		  <style>-->
-<!--		    .credits {-->
-<!--		      float: right;-->
-<!--		      text-align: right;-->
-<!--		      xfont-size: 12px;-->
-<!--		      color: #64696d;-->
-<!--		      xmargin-top: -.5em;-->
-<!--		    }-->
-<!--		    .logo {-->
-<!--		      display: inline-block;-->
-<!--		      position: static;-->
-<!--		      margin: 0;-->
-<!--		      xline-height: 79px;-->
-<!--		      text-align: left;-->
-<!--		    }-->
-<!--		    .credits .logo img {-->
-<!--		      width: 18px;-->
-<!--		      height: 18px;-->
-<!--		      xmargin-top: -4px;-->
-<!--		      margin-left: 4px;-->
-<!--		    }-->
-<!--      </style>-->
-
-
-
-            <!-- Top Bar Social Icons END -->
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</footer>
-<!-- end copyright -->
-
-</div>
-<!-- End Boxed Layout -->
 <script id="accessibility-widget-loader" data-account="AM9nYaJOao" src="https://cdn.userway.org/widget.js"></script><link href="https://fonts.googleapis.com/css?family=Roboto:400" rel="stylesheet" property="stylesheet" type="text/css" media="all">
 
 		<script type="text/javascript">
@@ -279,7 +216,6 @@
 </script>
 
 
-<!-- End footer -->
 
 
     <!-- Optional JavaScript; choose one of the two! -->
@@ -326,9 +262,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
     -->
-
-
-
 
 
   </body>

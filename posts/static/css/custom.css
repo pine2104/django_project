@@ -1,12 +1,15 @@
 .nav-link {
     font-family: 'Titillium Web', sans-serif !important;
     font-size: 2.5vmin
+
 }
 
-.navbar {
-    height: 20.0vh;
-    width: 100%;
 
+
+
+.navbar {
+    height: 5.0vmin;
+    width: 100%;
 
 }
 

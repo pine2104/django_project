@@ -15,12 +15,12 @@
           </div>
         {% endif %}
       </div>
-          <h1 class="article-title">{{ object.title }}</h1>
+          <h1 class="article-title" style="font-family: 'Josefin Sans', sans-serif;">{{ object.title }}</h1>
               <small class="text-muted"> By {{ object.author }}</small><small class="text-muted"> on {{ object.date_posted|date:"F d, Y" }}</small>
         {% if object.file %}
         <a href="{{ object.file.url }}">download</a>
         {% endif %}
-        <p class="article-content-d">{{ object.content }}</p>
+        <p class="article-content">{{ object.content|linebreaks }}</p>
     </div>
   </article>
 </div>
