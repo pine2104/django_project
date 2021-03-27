@@ -1,31 +1,45 @@
 {% extends "posts/base.html" %}
 {% load crispy_forms_tags %}
+
 {% block content %}
-<h1 class="jc-title" style="font-size: 5.0vmin;">Upload Files </h1>
-<h1 class="article-header">
-    Use for directly transmitting data or files. Please delete it to save storage after finishing work.
-</h1>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.upload_file }}
-    <button type="submit" class="btn btn-primary">Upload Files</button>
-</form>
 
 
-<div class="containter">
 
-<ul>
-    {% for document in all_files %}
-        <li>
+    <div id="alert-box"></div>
+    <div id="image-box"></div>
 
-            <a href="{{ document.upload_file.url }}">{{ document.upload_file.name }}</a>
-            <small>({{ document.upload_file.size|filesizeformat }}) - {{document.upload_date}}</small>
 
-            <a href="{% url 'delete' document.pk %}">delete</a>
+    <h1 class="jc-title" style="font-size: 5.0vmin;">Upload Files </h1>
+    <h1 class="article-header">
+        Use for directly transmitting data or files. Please delete it after finishing work for saving storage .
+    </h1>
+    <form id="upload-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.upload_file }}
+        <button id="upload" type="submit" class="btn btn-primary">Upload Files</button>
+    </form>
 
-        </li>
-    {% endfor %}
-    </ul>
+    <div id="progress-box" class="not-visible">progress</div>
+    <div id="cancel-box" class="not-visible">
+        <button id="cancel-btn" class="btn btn-danger">cancel</button>
+    </div>
 
-</div>
+
+
+    <div class="containter">
+
+    <ul>
+        {% for document in all_files %}
+            <li>
+
+                <a href="{{ document.upload_file.url }}">{{ document.upload_file.name }}</a>
+                <small>({{ document.upload_file.size|filesizeformat }}) - {{document.upload_date}}</small>
+
+                <a href="{% url 'delete' document.pk %}">delete</a>
+
+            </li>
+        {% endfor %}
+        </ul>
+
+    </div>
 {% endblock content %}

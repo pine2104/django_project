@@ -31,7 +31,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
-                        "django_excel.TemporaryExcelFileUploadHandler")
+                        "django_excel.TemporaryExcelFileUploadHandler",
+                        )
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -54,7 +55,6 @@ INSTALLED_APPS = [
     'django_tables2',
 
 ]
-
 
 
 MIDDLEWARE = [

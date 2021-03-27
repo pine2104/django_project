@@ -8,20 +8,22 @@
 <div>
 
     <div class="row">
-        <div class="col-1">
+        <div class="col-auto">
+            <h1 class="article-category">{{ post.category }}</h1>
+        </div>
+        <div class="col-auto">
             <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
         </div>
-        <div class="col-2">
-            <h1 class="article-header">{{ post.date_posted|date:"M d" }} by {{ post.author }}</h1>
+        <div class="col-auto">
+            <h1 class="article-header" style="margin-top: 2vmin;">{{ post.date_posted|date:"Y M d" }} by {{ post.author }}</h1>
         </div>
     </div>
     <div class="row">
-        <div class="col col-lg-1"><h1 class="article-category">{{ post.category }}</h1> </div>
         <div class="col-md-auto article-title">{{ post.title }}</div>
     </div>
     <div class="row">
         <h1 class="article-content">{{ post.content|linebreaks|slice:"0:500" }}...</h1>
-        <a href="{% url 'postdetail' post.pk %}" class="stretched-link" style="color: #00a521;text-decoration:none;">Read more</a>
+        <a href="{% url 'postdetail' post.pk %}" style="color: #00a521;text-decoration:none;">Read more</a>
     </div>
     <hr>
     <div class="article-sep">

@@ -1,9 +1,14 @@
 /* stylelint-disable selector-list-comma-newline-after */
 
+
+.not-visivle {
+    display: none;
+}
+
 /* for articles setting */
 .article-title {
   color: #000000;
-  font-family: 'PT Mono', monospace, 'Chango', cursive, 'Josefin Sans', 'Noto Sans TC',sans-serif;
+  font-family: 'Josefin Sans', 'Noto Sans TC',sans-serif;
   padding-bottom: 0.0vmin;
   padding-left: 0vmin;
   font-size: 5.0vmin
@@ -33,7 +38,7 @@ a.article-title:hover {
 
 .article-content {
   color: #000000;
-  font-family: 'PT Mono', monospace, 'Josefin Sans', sans-serif, 'Chango', cursive;
+  font-family: 'Nanum Gothic Coding', monospace, 'Josefin Sans', sans-serif, 'Chango', cursive;
   margin-top: 0.0vmin;
   font-size: 3.0vmin
 
@@ -49,7 +54,7 @@ a.article-title:hover {
 .article-img {
   height: 35px;
   width: 35px;
-  margin-right: 16px;
+  margin-right: 0px;
 }
 
 .content-section {
@@ -86,7 +91,7 @@ a.article-title:hover {
 
 .ntu-img {
   height: 9.0vmin;
-  width: 78.0vmin;
+  width: 40.0vmin;
 }
 
 .search-img {
