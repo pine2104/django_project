@@ -75,6 +75,8 @@ urlpatterns = [
 
     # path('seq/vector/', primer_views.PrimerVectorUpdateView.as_view(), name='seqvector'),
     path('seq/', primer_views.calpcr, name='seq'),
+    path('seq_setL/', primer_views.calpcr_setL, name='seq_setL'),
+    path('seq/showPCR', primer_views.show_pcr, name='showpcr'),
     path('vector/new/', primer_views.VectorCreateView.as_view(), name='vector_create'),
     path('vector/', primer_views.vector_index, name='vector_index'),
 

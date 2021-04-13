@@ -14,7 +14,7 @@ from .filters import PrimerFilter
 from pydna.dseq import Dseq
 import django_tables2 as tables
 from django.contrib.auth.decorators import login_required
-from .pcr import hamming_distance, match_primer, plotpcr
+from .pcr import hamming_distance, match_primer, plotpcr, setL_pcr, get_prop_primers
 
 
 
@@ -86,125 +86,136 @@ def SelectVector(request):
             primer.vector = vector
             primer.save() # update choose vector and redirect to result
         # return render(request, template_name, context={'vector': vector})
-        return redirect('seq')
+        if 'Select_Pairs' in request.POST:
+            return redirect('seq')
+        elif 'Set_PCR_Length' in request.POST:
+            return redirect('seq_setL')
 
     return render(request, template_name, context)
 
 
-def calpcr(request):
-    # pbr = Vector.objects.get(name='pbr322')
+
+def show_pcr(request):
+    check_box_list = request.session['selected_primer_id']
+    vector_name = request.session['vector_name']
+    L = request.session['L']
+    primer_name = request.session['primer_name']
+    primer_position = request.session['primer_position']
+    L_pcr = request.session['L_pcr']
+    show_seq = request.session['show_seq']
+
+    return render(request, template_name='primer/show_pcr_seq.html',
+                  context={'vector_name': vector_name, 'L': L, 'primer_name': primer_name,
+                           'primer_position': primer_position, 'L_pcr': L_pcr,
+                           'show_seq': show_seq, 'check_box_list': check_box_list
+                           })
+
+def calpcr_setL(request):
     primers = Primer.objects.all()
     vector = primers[0].vector
-    vector_name = vector.name
-    seq = str.lower(vector.sequence)
-    seq = Dseq(seq.replace(' ', ''))
-    L = len(str(seq))
-    rseq = seq.reverse_complement()
-    poss = []
-    for primer in primers:
-        p_seq = Dseq(primer.sequence.replace(' ', ''))
-        p_seq_s = str.lower(str(p_seq)) # all lower case
-        nt='atcgn'
-        idt_codes_subtract1 = ['icy5', 'icy3', '5biosg', '(am)']
-        idt_codes_subtract2 = ['dspacer']
-        idt_codes_subtract3 = ['dbcoteg']
-        idt_codes_subtract4 = ['biotinteg']
-        idt_codes_plus1 = ['ds', 'idsp']
-
-        Lp_subtract = 0
-        for s1 in idt_codes_subtract1:
-            if p_seq_s.find(s1) >= 0:
-                Lp_subtract += 1
-        for s2 in idt_codes_subtract2:
-            if p_seq_s.find(s2) >= 0:
-                Lp_subtract += 2
-        for s3 in idt_codes_subtract3:
-            if p_seq_s.find(s3) >= 0:
-                Lp_subtract += 3
-        for s4 in idt_codes_subtract4:
-            if p_seq_s.find(s4) >= 0:
-                Lp_subtract += 4
-        for p1 in idt_codes_plus1:
-            if p_seq_s.find(p1) >= 0:
-                Lp_subtract -= 1
-
-        Lp = 0
-        for i in nt:
-            Lp += p_seq_s.count(i)
-        Lp = Lp - Lp_subtract
-        # Lp = len(p_seq_s)
-        if seq.find(p_seq_s) != -1: # match it
-            position = seq.find(p_seq_s) + 1
-            dir = 'forward'
-            in_vector = True
-        elif rseq.find(p_seq_s) != -1:
-            position = rseq.find(p_seq_s) - L - 1
-            dir = 'reverse'
-            in_vector = True
-        else:
-            position = -1
-            dir = 'none'
-            in_vector = False
-        primer.position = position
-        primer.dir = dir
-        primer.in_vector = in_vector
-        primer.length = Lp
-        primer.save()
-
+    vector_name, seq, L, position, dir, in_vector = get_prop_primers(primers, vector)
     primers = primers.filter(in_vector=True).order_by('position')
-    # primers = Primer.objects.all().order_by('-created_at')
-    primerFilter = PrimerFilter(queryset=primers)
+    if request.method == 'POST':
 
-    if request.method == 'POST' and 'Search' in request.POST:
-        primerFilter = PrimerFilter(request.POST, queryset=primers)
+        check_box_list = request.POST.getlist("check_box")
+        request.session['selected_primer_id'] = check_box_list
 
-    L = len(str(seq))
-
-    # if request.method == 'POST' and 'cal' in request.POST:
-    check_box_list = request.POST.getlist("check_box")
-    if len(check_box_list) == 2:
-        primer_1 = Primer.objects.get(id=check_box_list[0])
-        p1_name = primer_1.name
-        primer_2 = Primer.objects.get(id=check_box_list[1])
-        p2_name = primer_2.name
-
-
-        if primer_1.dir == 'reverse' and primer_2.dir == 'forward':
-            pr = primer_1.position
-            pr_name = primer_1.name
-            pr_seq = primer_1.sequence
-            pf = primer_2.position
-            pf_name = primer_2.name
-            pf_seq = primer_2.sequence
-        elif primer_2.dir == 'reverse' and primer_1.dir == 'forward':
-            pr = primer_2.position
-            pr_name = primer_2.name
-            pr_seq = primer_2.sequence
-            pf = primer_1.position
-            pf_name = primer_1.name
-            pf_seq = primer_1.sequence
+        # L_set = int(request.POST.get('L_set'))
+        # tol = int(request.POST.get('tol'))
+        if len(check_box_list) >= 1 and (request.POST.get('L_set') != None) and (request.POST.get('tol') != None):
+            L_set = int(request.POST.get('L_set'))
+            tol = int(request.POST.get('tol'))
+            # L_pcr = []
+            for check_box in check_box_list:
+                p1 = Primer.objects.get(id=check_box)
+                p1_pos = p1.position
+                name_collect = [p1.name]
+                for primer in primers:
+                    L_pcr = setL_pcr(L, p1_pos, primer.position)
+                    primer.L_pcr = L_pcr
+                    primer.save()
+                    if (L_pcr > L_set-tol) and (L_pcr < L_set+tol): ## reverse
+                        name_collect += [primer.name]
+                primers_collect = primers.filter(name__in=name_collect).order_by('position')
+                primerFilter = PrimerFilter(request.POST, queryset=primers_collect)
 
         else:
-            pr = 0
-            pf = 0
-        if abs(pr) >= abs(pf):
-            L_pcr = -pr - pf
-        else:
-            L_pcr = L - pr - pf
-        show_seq = plotpcr(str(seq), pf_seq, pr_seq)
-        primer_name = [pf_name] + [pr_name]
-        primer_position = [pf, pr]
+            primerFilter = PrimerFilter(request.POST, queryset=primers)
+
     else:
         L_pcr = 'You can only select two primers!!'
         primer_name = ['','']
-        show_seq = "can't pcr"
-        primer_name = [''] + ['']
         primer_position = ['x', 'x']
+        primerFilter = PrimerFilter(request.POST, queryset=primers)
+
+    return render(request, template_name='primer/set_pcr_length.html',
+                  context={ 'primers': primers,
+                           'primerFilter': primerFilter,'L_pcr': L_pcr,
+
+                           })
+
+
+def calpcr(request):
+    primers = Primer.objects.all()
+    vector = primers[0].vector
+    vector_name, seq, L, position, dir, in_vector = get_prop_primers(primers, vector)
+    primers = primers.filter(in_vector=True).order_by('position')
+    primerFilter = PrimerFilter(queryset=primers)
+
+    if request.method == 'POST' or 'cal' in request.POST:
+
+        check_box_list = request.POST.getlist("check_box")
+        primerFilter = PrimerFilter(request.POST, queryset=primers)
+        request.session['selected_primer_id'] = check_box_list
+
+        # if request.method == 'POST' and 'cal' in request.POST:
+        # check_box_list = request.POST.getlist("check_box")
+        if len(check_box_list) == 2:
+            primer_1 = Primer.objects.get(id=check_box_list[0])
+            primer_2 = Primer.objects.get(id=check_box_list[1])
+
+            if primer_1.dir == 'reverse' and primer_2.dir == 'forward':
+                pr = primer_1.position
+                pr_name = primer_1.name
+                pr_seq = primer_1.sequence
+                pf = primer_2.position
+                pf_name = primer_2.name
+                pf_seq = primer_2.sequence
+            elif primer_2.dir == 'reverse' and primer_1.dir == 'forward':
+                pr = primer_2.position
+                pr_name = primer_2.name
+                pr_seq = primer_2.sequence
+                pf = primer_1.position
+                pf_name = primer_1.name
+                pf_seq = primer_1.sequence
+
+            else: ## not to pcr mode
+                pr = 0
+                pf = 0
+                pf_seq = ''
+                pr_seq = ''
+                pf_name = ''
+                pr_name = ''
+            if abs(pr) >= abs(pf):
+                L_pcr = -pr - pf
+            else:
+                L_pcr = L - pr - pf
+
+            show_seq = plotpcr(str(seq), pf_seq, pr_seq)
+            primer_name = [pf_name] + [pr_name]
+            primer_position = [pf, pr]
+
+            request.session['show_seq'] = show_seq
+            request.session['vector_name'] = vector_name
+            request.session['L'] = L
+            request.session['primer_position'] = primer_position
+            request.session['L_pcr'] = L_pcr
+            request.session['primer_name'] = primer_name
+            return redirect('showpcr')
 
     return render(request, template_name='primer/seq.html',
-                  context={'seq': seq, 'L': L, 'primers': primers, 'show_seq': show_seq,
-                           'primerFilter': primerFilter, 'primer_name': primer_name,
-                           'L_pcr': L_pcr, 'vector_name': vector_name, 'primer_position': primer_position,
+                  context={'vector_name': vector_name, 'seq': seq, 'L': L, 'primers': primers,
+                           'primerFilter': primerFilter,
                            })
 
 tables.SingleTableView.table_pagination = False

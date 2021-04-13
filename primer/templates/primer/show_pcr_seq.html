@@ -1,0 +1,13 @@
+{% extends 'posts/base.html' %}
+{% block content %}
+<!--<h3>{{check_box_list}}</h3>-->
+<h3><strong>Length of Vector, {{vector_name}}:</strong> {{ L }} bp</h3>
+<!--<h3><strong>PCR product Calculating Equation: L-Pf-Pr</strong></h3>-->
+<h3><strong>Primer position :</strong> {{primer_position}}</h3>
+
+<h3><strong>PCR product:</strong> {{ L_pcr }} bp ({{ primer_name }})</h3>
+
+<h6 style="font-family:monospace; font-size= 0.5%;">{{ show_seq|linebreaks }}</h6>
+
+
+{% endblock %}

@@ -28,6 +28,7 @@ class Primer(models.Model):
         ])
     project = models.ForeignKey(Project, on_delete=models.CASCADE, default=1)
     can_pcr = models.BooleanField(default=True) # for pcr or not
+    L_pcr = models.IntegerField(default=0)
     vector = models.ForeignKey(Vector, on_delete=models.CASCADE, default=1, related_name='vector')
     in_vector = models.BooleanField(default=True)
     dir = models.CharField(max_length=10, default='none')
