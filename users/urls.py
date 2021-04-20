@@ -1,5 +1,9 @@
+from . import views as user_views
 from django.urls import path
 
-from . import views
+urlpatterns = [
 
-app_name = 'users'
+    path('register/', user_views.register, name='register'),
+    path('profile/', user_views.profile, name='profile'),
+
+]

@@ -129,7 +129,6 @@
                         </button>
                         <div id="demo4" class="collapse">
                             <li><a class="dropdown-item" href="{% url 'fileupload' %}">Upload files</a></li>
-<!--                            <li><a class="dropdown-item" href="{% url 'index' %}">Forms</a></li>-->
                         </div>
 
                         <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#demo5">
@@ -155,7 +154,7 @@
                 </b-sidebar>
           </div>
           <div class="col-auto" style="margin-left: -5.0vmin; padding-left: -0vmin;">
-              <a href="{% url 'homepage' %}"><img class="ntu-img" src="{% static 'lab_icon5.png' %}"></a>
+              <a href="{% url 'homepage' %}"><img class="ntu-img" src="{{STATIC_ROOT}}lab_icon5.png"></a>
           </div>
           <div class="col-auto align-self-end" style="margin-top: -5vmin; margin-left: 0vmin;">
               <dd class="nav-item dropdown">
@@ -184,7 +183,6 @@
 
   <div>
       <div class="row">
-<!--          blank-->
           <div class="col-2">
           </div>
 <!--          content-->
