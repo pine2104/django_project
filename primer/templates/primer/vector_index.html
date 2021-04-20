@@ -11,8 +11,8 @@
 
             {% for vector in vectors %}
             <tr>
-            <th scope="row"><a href="#">{{vector.name}}</th>
-                <td>{{vector.sequence}}</td>
+            <th scope="row"><a href="{% url 'vector_detail' vector.pk %}">{{ vector.name }}</th>
+                <td>{{ vector.sequence }}</td>
             </tr>
             {% endfor %}
         </table>

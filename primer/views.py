@@ -50,7 +50,7 @@ class PrimerDetailView(DetailView):
 
 class PrimerUpdateView(LoginRequiredMixin, UpdateView):
     model = Primer
-    fields = ['name', 'sequence', 'project', 'modification_5', 'modification_3', 'modification_internal', 'who_ordered', 'purpose', 'price', 'volumn', 'brand']
+    fields = ['name', 'sequence', 'project', 'modification_5', 'modification_3', 'modification_internal', 'who_ordered', 'purpose', 'price', 'volumn', 'vendor']
     def get_success_url(self):
         return reverse('primerinfo', kwargs={'pk': self.object.id})
     def form_valid(self, form): # make authen to the user, over-write this function.
@@ -63,12 +63,6 @@ class PrimerDeleteView(LoginRequiredMixin, DeleteView):
     model = Primer
     template_name = 'primer/primer_confirm_delete.html'
     success_url = '/'
-
-
-class PrimerVectorUpdateView(LoginRequiredMixin, UpdateView):
-    model = Primer
-    fields = ['vector']
-    template_name = 'primer/primervector_update.html'
 
 
 @login_required
@@ -250,6 +244,19 @@ class VectorCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form): # make authen to the user, over-write this fun.
         return super().form_valid(form)
 
+class VectorDetailView(DetailView):
+    model = Vector
+    template_name = 'primer/vector_detail.html'
+
+class VectorDeleteView(LoginRequiredMixin, DeleteView):
+    model = Vector
+    template_name = 'primer/vector_confirm_delete.html'
+    success_url = '/'
+
+class VectorUpdateView(LoginRequiredMixin, UpdateView):
+    model = Vector
+    template_name = 'primer/vector_form.html'
+    fields = ['name', 'sequence']
 
 def vector_index(request):
     vectors = Vector.objects.all()

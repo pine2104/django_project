@@ -1,18 +1,18 @@
 {% extends 'posts/base.html' %}
 
-<!--{% block title %} Creat New List {% endblock %}-->
 {% block content %}
 
 
 <h1>{{ object.name }}</h1>
 <div>
-<a class="btn btn-secondary btn-sm mt-1 mb-1" href="#">Update</a>
-<a class="btn btn-danger btn-sm mt-1 mb-1" href="#">Delete</a>
+<a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'vector_update' object.id %}">Update</a>
+<a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'vector_delete' object.id %}">Delete</a>
 </div>
 
 
 <div class="content-section">
-    <p><strong>Sequence (5' to 3'):</strong> {{ object.sequence }}</p>
+    <h4><strong>Sequence (5' to 3'):</strong></h4>
+    <h6 style="font-family:monospace;">{{ object.sequence }}</h6>
 </div>
 
 {% endblock %}
